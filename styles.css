@@ -396,11 +396,97 @@ footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border);
 #scroll-top:hover { transform: translateY(-3px); }
 
 /* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 0 1.2rem; }
+  .nav-links { gap: 1.2rem; }
+  .section { padding: 3.5rem 1.2rem; }
+  #live-stats { padding: 3rem 1.2rem; }
+  .hero-grid { gap: 2rem; padding: 0 1.2rem; }
+  .two-col { gap: 2rem; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid > .stat-tile:nth-child(1) { border-radius: 12px 0 0 0; }
+  .stats-grid > .stat-tile:nth-child(2) { border-radius: 0 12px 0 0; }
+  .stats-grid > .stat-tile:nth-child(3),
+  .stats-grid > .stat-tile:nth-child(4) { border-radius: 0; }
+  .stats-grid > .stat-tile:nth-child(5) { border-radius: 0 0 0 12px; }
+  .stats-grid > .stat-tile:nth-child(6) { border-radius: 0 0 12px 0; }
+}
+
 @media (max-width: 768px) {
+  nav { padding: 0 1rem; height: 56px; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
-  .hero-grid, .two-col, .team-grid { grid-template-columns: 1fr; }
-  .proj-card { grid-template-columns: 1fr; }
+  .nav-cta { display: none; }
+  .nav-logo { font-size: 1rem; }
+
+  .section { padding: 3rem 1.1rem; }
+  #live-stats { padding: 2.8rem 1.1rem; }
+  #hero { min-height: auto; padding-top: 5rem; padding-bottom: 3rem; }
+  .hero-grid { grid-template-columns: 1fr; gap: 1.8rem; padding: 0 1.1rem; }
+  .two-col, .team-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .proj-card { grid-template-columns: 1fr; gap: 1rem; }
+  .proj-stats { flex-direction: row; text-align: left; justify-content: flex-start; gap: 1.5rem; min-width: 0; }
+  .proj-stats > div { text-align: left; }
+
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .btn { justify-content: center; }
+
+  .stat { padding: .95rem 1rem; }
+  .hero-stats .stat-num { font-size: 1.3rem !important; }
+  .stat-lbl { font-size: .66rem; }
+  .hero-card-header { padding: .8rem 1rem; font-size: .74rem; }
+
+  h1 { font-size: 2rem; line-height: 1.15; }
+  h2 { font-size: 1.5rem; }
+
+  .hero-sub { font-size: 1rem; margin: .85rem 0 1.5rem; }
+
   .stats-grid { grid-template-columns: 1fr; }
-  #scroll-top { bottom: 1rem; right: 1rem; }
+  .stats-grid > .stat-tile:nth-child(1) { border-radius: 12px 12px 0 0; }
+  .stats-grid > .stat-tile:nth-child(6) { border-radius: 0 0 12px 12px; }
+  .stats-grid > .stat-tile:not(:first-child):not(:last-child) { border-radius: 0; }
+  .stat-tile { padding: 1.2rem 1.4rem; }
+  .stat-tile-num { font-size: 1.65rem; }
+
+  .pillar { padding: 1.1rem 1.2rem; gap: .8rem; flex-wrap: wrap; }
+  .pillar-num { min-width: 0; font-size: .68rem; }
+  .pillar-icon { font-size: 1.2rem; min-width: 1.5rem; }
+  .pillar > div { flex: 1 1 100%; }
+
+  .cards { grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .card { padding: 1.1rem; }
+  .card-icon { font-size: 1.4rem; }
+
+  #portal-cta { padding: 3rem 1.1rem; }
+  .portal-box h2 { font-size: 1.4rem; }
+  .portal-box .btn { padding: .8rem 1.6rem !important; font-size: .95rem !important; }
+
+  footer { padding: 1.6rem 1rem; font-size: .74rem; }
+
+  #scroll-top { bottom: 1rem; right: 1rem; width: 40px; height: 40px; }
+
+  #live-stats .live-stats-header { margin-bottom: 1.8rem; }
+  #live-stats svg text { font-size: 10px; }
+}
+
+@media (max-width: 480px) {
+  nav { padding: 0 .9rem; }
+  .section { padding: 2.4rem .9rem; }
+  #live-stats { padding: 2.4rem .9rem; }
+  #hero { padding-top: 4.5rem; }
+  .hero-grid { padding: 0 .9rem; }
+  h1 { font-size: 1.7rem; }
+  h2 { font-size: 1.3rem; }
+  .hero-sub { font-size: .95rem; }
+  .cards { grid-template-columns: 1fr; }
+  .cert-row { gap: .35rem; }
+  .cert { font-size: .68rem; padding: .22rem .55rem; }
+  .team-card { padding: .8rem .9rem; gap: .7rem; }
+  .team-av { width: 40px; height: 40px; font-size: .82rem; }
+
+  /* PUE gauge — shrink centre readout */
+  #pue-gauge text[font-size="40"] { font-size: 32px; }
+
+  .hero-stats { grid-template-columns: 1fr; }
+  .stat { padding: .8rem 1rem; }
 }
