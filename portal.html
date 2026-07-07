@@ -265,7 +265,7 @@
       h2 { font-size: 1.4rem; }
 
       /* Client brief header */
-      .page > div[style*="Nexus"], .page > div[style*="Birdy"] { flex-wrap: wrap; }
+      .page > div[style*="Birdy"] { flex-wrap: wrap; }
     }
 
     @media(max-width:480px) {
@@ -328,9 +328,9 @@
     <!-- Live fleet metrics strip -->
     <div class="sidebar-live">
       <div class="sidebar-live-title"><div class="sl-dot"></div>Fleet Live</div>
-      <div class="sl-row"><span class="sl-num"><span id="sl-pue">1.150</span><span class="sl-trend">↓ excellent</span></span><span class="sl-lbl">PUE</span></div>
+      <div class="sl-row"><span class="sl-num"><span id="sl-pue">1.200</span><span class="sl-trend">↓ excellent</span></span><span class="sl-lbl">PUE</span></div>
       <div class="sl-row"><span class="sl-num"><span id="sl-kwh">—</span> <span style="font-size:.62rem;color:rgba(255,255,255,.6)">GWh</span><span class="sl-trend">↑</span></span><span class="sl-lbl">Clean energy</span></div>
-      <div class="sl-row"><span class="sl-num"><span id="sl-uptime">99.994</span><span style="font-size:.62rem;color:rgba(255,255,255,.6)">%</span><span class="sl-trend">↑ stable</span></span><span class="sl-lbl">Uptime</span></div>
+      <div class="sl-row"><span class="sl-num"><span id="sl-uptime">99.982</span><span style="font-size:.62rem;color:rgba(255,255,255,.6)">%</span><span class="sl-trend">↑ stable</span></span><span class="sl-lbl">Uptime</span></div>
     </div>
     <div class="nav-sec-title">Your Proposal</div>
     <ul class="sidebar-nav">
@@ -365,18 +365,18 @@
 
       <div class="card" style="margin-bottom:1.4rem;background:#f0fdf4;border-color:#bbf7d0">
         <h3 style="color:var(--green);margin-bottom:.5rem">What we understood</h3>
-        <p style="color:var(--text);font-size:.9rem">Birdy Capital needs a carbon-neutral, EU-compliant data centre that demonstrates technology leadership — delivered on time, within €50M, with full client sign-off at every milestone.</p>
+        <p style="color:var(--text);font-size:.9rem">Birdy Capital needs a carbon-neutral, EU-compliant data centre delivered on time and within €50M — with uptime you can bank on, sustainability that survives audit, and every euro accounted for.</p>
       </div>
 
       <table>
         <thead><tr><th>Your Requirement</th><th>Our Commitment</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td><strong>Renewable energy integration</strong></td><td>8 MW solar + 20-yr wind PPA · 100% RE from Day 1 · RE100 certified</td><td><span class="tag tag-green">Covered</span></td></tr>
-          <tr><td><strong>Cooling innovation</strong></td><td>Direct Liquid Cooling on all racks · PUE 1.15 · Free-air 70–80% of hours</td><td><span class="tag tag-green">Covered</span></td></tr>
+          <tr><td><strong>Renewable energy integration</strong></td><td>60% on-site solar + 30% wind PPA (15-yr locked) + 10% certified green grid backup · 100% RE from Day 1 · contractual guarantee</td><td><span class="tag tag-green">Covered</span></td></tr>
+          <tr><td><strong>Cooling innovation</strong></td><td>Liquid cooling core for high-density racks + air-side economisation · PUE 1.2 vs industry 1.6 (25% less energy wasted)</td><td><span class="tag tag-green">Covered</span></td></tr>
           <tr><td><strong>Server optimisation</strong></td><td>AI scheduler (Orchid) · ≥75% utilisation vs EU avg 15%</td><td><span class="tag tag-green">Covered</span></td></tr>
           <tr><td><strong>Circular hardware lifecycle</strong></td><td>5-yr refresh · 95% reuse · Digital asset passports · Zero landfill</td><td><span class="tag tag-green">Covered</span></td></tr>
           <tr><td><strong>EU sustainability compliance</strong></td><td>EN 50600 · EU Taxonomy · CSRD · EED · WEEE · GDPR/NIS2 — all designed in</td><td><span class="tag tag-teal">Certified</span></td></tr>
-          <tr><td><strong>Redundancy &amp; uptime</strong></td><td>Tier III+ · N+1 · Dual-feed power · 99.99% SLA contractual from Year 3</td><td><span class="tag tag-green">Guaranteed</span></td></tr>
+          <tr><td><strong>Redundancy &amp; uptime</strong></td><td>Tier III · N+1 on all critical systems · zero single point of failure · 99.982% uptime</td><td><span class="tag tag-green">Guaranteed</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -409,23 +409,23 @@
       <h3 style="margin:1.5rem 0 .8rem">Energy Mix — Your Site</h3>
       <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem">
         <div class="bar-row">
-          <span class="bar-label">On-site solar (rooftop + carport)</span>
-          <div class="bar-track"><div class="bar-fill" style="width:55%;background:linear-gradient(90deg,#b45309,#f59e0b)">55% · 8 MW</div></div>
+          <span class="bar-label">On-site solar arrays (owned/controlled)</span>
+          <div class="bar-track"><div class="bar-fill" style="width:60%;background:linear-gradient(90deg,#b45309,#f59e0b)">60%</div></div>
         </div>
         <div class="bar-row">
-          <span class="bar-label">Wind PPA (Lower Saxony, 20yr fixed)</span>
-          <div class="bar-track"><div class="bar-fill" style="width:35%;background:linear-gradient(90deg,var(--teal),var(--green))">35% · 5 MW</div></div>
+          <span class="bar-label">Wind PPA (Lower Saxony · 15-yr locked)</span>
+          <div class="bar-track"><div class="bar-fill" style="width:30%;background:linear-gradient(90deg,var(--teal),var(--green))">30%</div></div>
         </div>
         <div class="bar-row">
-          <span class="bar-label">Grid (backup only, &lt;2% from Yr 2)</span>
+          <span class="bar-label">Certified green grid backup</span>
           <div class="bar-track"><div class="bar-fill" style="width:10%;background:#9ca3af">10%</div></div>
         </div>
       </div>
 
-      <h3 style="margin:1.5rem 0 .8rem">Why Direct Liquid Cooling?</h3>
+      <h3 style="margin:1.5rem 0 .8rem">Why Liquid Cooling + Free-Air?</h3>
       <div class="cards-3">
-        <div class="card"><h3>Removes heat at source</h3><p>Rear-door HX on every rack — 90% of heat removed before it enters room air</p></div>
-        <div class="card"><h3>Free-air 70–80% of hours</h3><p>Frankfurt climate enables economisation most of the year — mechanical cooling only in peak summer</p></div>
+        <div class="card"><h3>Liquid cooling core</h3><p>Rear-door HX on every high-density rack — 90% of heat removed at source before it enters room air</p></div>
+        <div class="card"><h3>Air-side economisation</h3><p>Frankfurt climate enables free-air cooling 70–80% of hours — mechanical cooling only in peak summer</p></div>
         <div class="card"><h3>€340K/yr revenue</h3><p>Waste heat exported to Sachsenhausen district heating via heat pump</p></div>
       </div>
 
@@ -465,7 +465,7 @@
             <div style="font-size:.7rem;color:var(--muted);text-align:center">Year 4<br/>Net Zero</div>
           </div>
         </div>
-        <p style="font-size:.75rem;color:var(--muted);margin-top:.6rem">Year 1 spike = construction embodied carbon. Residual 180 tCO₂e/yr offset via Gold Standard credits.</p>
+        <p style="font-size:.75rem;color:var(--muted);margin-top:.6rem">Year 1 spike = construction embodied carbon. Year 4 = <strong style="color:var(--green)">operational net-zero — no offsets required</strong>. Carbon trajectory anchored to renewable-first design, not carbon credits.</p>
       </div>
 
       <h3 style="margin-bottom:.8rem">EU Compliance Checklist</h3>
@@ -474,8 +474,8 @@
         <tbody>
           <tr><td><strong>EU Taxonomy</strong></td><td>DNSH assessment completed · Green Bond documentation ready</td><td><span class="tag tag-green">✓</span></td></tr>
           <tr><td><strong>CSRD</strong></td><td>ESRS-aligned annual reports from Year 1 · automated from BMS data</td><td><span class="tag tag-green">✓</span></td></tr>
-          <tr><td><strong>Energy Efficiency Directive</strong></td><td>PUE 1.15 · exceeds EED 1.2 threshold · annual EC registry reporting included</td><td><span class="tag tag-green">✓</span></td></tr>
-          <tr><td><strong>EN 50600 / Tier III+</strong></td><td>Certified before construction start · TÜV Rheinland audit Year 3 M6</td><td><span class="tag tag-green">✓</span></td></tr>
+          <tr><td><strong>Energy Efficiency Directive</strong></td><td>PUE 1.2 · meets EED threshold · annual EC registry reporting included</td><td><span class="tag tag-green">✓</span></td></tr>
+          <tr><td><strong>EN 50600 / Tier III</strong></td><td>Certified before construction start · TÜV Rheinland audit Year 3 M6</td><td><span class="tag tag-green">✓</span></td></tr>
           <tr><td><strong>WEEE Directive</strong></td><td>EcoChain partnership · producer responsibility per asset · zero landfill</td><td><span class="tag tag-green">✓</span></td></tr>
           <tr><td><strong>GDPR / NIS2</strong></td><td>Physical security to EN 50600-2-5 · NIS2 "essential entity" compliant</td><td><span class="tag tag-green">✓</span></td></tr>
         </tbody>
@@ -486,15 +486,14 @@
     <div class="page" id="page-finance">
       <div class="pill">Financial Proposal</div>
       <h2>The <span class="hl">€50 Million</span> Budget</h2>
-      <p style="margin-bottom:1rem;font-size:.88rem">Base budget: €50M across five work packages, plus a ring-fenced €6M contingency (not drawn unless needed), giving a maximum programme envelope of €56M.</p>
+      <p style="margin-bottom:1rem;font-size:.88rem">€50M across five work packages — with an <strong>8% contingency built in</strong>, not bolted on. Every euro is allocated before we break ground.</p>
 
       <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;margin-bottom:1.5rem">
         <div class="bar-row"><span class="bar-label">Civil works &amp; infrastructure</span><div class="bar-track"><div class="bar-fill" style="width:36%;background:linear-gradient(90deg,#15803d,var(--green))">€18M</div></div><span class="bar-amount">36%</span></div>
         <div class="bar-row"><span class="bar-label">Renewable energy systems</span><div class="bar-track"><div class="bar-fill" style="width:24%;background:linear-gradient(90deg,var(--teal),var(--green))">€12M</div></div><span class="bar-amount">24%</span></div>
         <div class="bar-row"><span class="bar-label">IT hardware &amp; servers</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:linear-gradient(90deg,#0284c7,var(--teal))">€10M</div></div><span class="bar-amount">20%</span></div>
         <div class="bar-row"><span class="bar-label">Cooling systems</span><div class="bar-track"><div class="bar-fill" style="width:12%;background:linear-gradient(90deg,#7c3aed,var(--teal))">€6M</div></div><span class="bar-amount">12%</span></div>
-        <div class="bar-row"><span class="bar-label">Project management &amp; compliance</span><div class="bar-track"><div class="bar-fill" style="width:8%;background:#9ca3af">€4M</div></div><span class="bar-amount">8%</span></div>
-        <div class="bar-row"><span class="bar-label"><strong>Contingency (ring-fenced)</strong></span><div class="bar-track" style="background:#fffbeb;border-color:#fde68a"><div style="width:100%;height:100%;display:flex;align-items:center;padding-left:.6rem;font-size:.74rem;font-weight:700;color:var(--warn)">€6M — not allocated unless needed</div></div><span class="bar-amount" style="color:var(--warn)">12%</span></div>
+        <div class="bar-row"><span class="bar-label">Project management &amp; compliance <span style="color:var(--muted);font-size:.72rem">(incl. 8% contingency)</span></span><div class="bar-track"><div class="bar-fill" style="width:8%;background:#9ca3af">€4M</div></div><span class="bar-amount">8%</span></div>
       </div>
 
       <h3 style="margin-bottom:.8rem">Phased Spending</h3>
@@ -510,9 +509,9 @@
           <h3>Return on Investment</h3>
           <ul class="bullet" style="margin-top:.5rem">
             <li>€8.4M projected annual revenue by Year 3</li>
-            <li>7.2-year full payback period</li>
-            <li>14.2% IRR over 15-year lifecycle</li>
-            <li>€22M NPV at 8% discount rate</li>
+            <li><strong>Breakeven in Year 6</strong></li>
+            <li><strong>12% IRR</strong> over the project lifecycle</li>
+            <li>Milestone-gated: no tranche &gt; €8M released without your sign-off</li>
           </ul>
         </div>
         <div class="card">
@@ -528,57 +527,59 @@
 
       <div class="card" style="margin-top:1rem">
         <h3>Energy Market Hedge</h3>
-        <p style="margin:0">20-yr PPA fixed at <strong style="color:var(--green)">€0.042/kWh</strong> — locked before construction. EU spot prices ranged €0.07–€0.32/kWh in recent years. We are immune. Three stress scenarios modelled (€0.15 / €0.25 / €0.35/kWh spot) — project viable in all.</p>
+        <p style="margin:0">15-yr PPA fixed at <strong style="color:var(--green)">€0.042/kWh</strong> — locked before construction. EU spot prices ranged €0.07–€0.32/kWh in recent years. We are immune. Three stress scenarios modelled (€0.15 / €0.25 / €0.35/kWh spot) — project viable in all.</p>
       </div>
     </div>
 
     <!-- RISK REGISTER -->
     <div class="page" id="page-risk">
       <div class="pill">Risk Register</div>
-      <h2>Every Risk. <span class="hl">Already Mitigated.</span></h2>
+      <h2>Four Risks. <span class="hl">All Managed.</span></h2>
 
       <table>
         <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Residual</th></tr></thead>
         <tbody>
-          <tr><td><strong>High capital expenditure</strong></td><td><span class="tag tag-danger">High</span></td><td><span class="tag tag-danger">High</span></td><td><span class="tag tag-warn">Medium</span></td></tr>
-          <tr><td><strong>Technology uncertainty</strong></td><td><span class="tag tag-warn">Medium</span></td><td><span class="tag tag-danger">High</span></td><td><span class="tag tag-green">Low</span></td></tr>
-          <tr><td><strong>Energy market volatility</strong></td><td><span class="tag tag-danger">High</span></td><td><span class="tag tag-warn">Medium</span></td><td><span class="tag tag-green">Low</span></td></tr>
-          <tr><td><strong>Regulatory constraints</strong></td><td><span class="tag tag-warn">Medium</span></td><td><span class="tag tag-danger">High</span></td><td><span class="tag tag-green">Low</span></td></tr>
+          <tr><td><strong>Supply chain delay</strong></td><td><span class="tag tag-warn">Medium</span></td><td><span class="tag tag-danger">High</span></td><td><span class="tag tag-green">Low</span></td></tr>
+          <tr><td><strong>Energy price spike</strong></td><td><span class="tag tag-green">Low</span></td><td><span class="tag tag-warn">Medium</span></td><td><span class="tag tag-green">Low</span></td></tr>
+          <tr><td><strong>Regulatory change</strong></td><td><span class="tag tag-green">Low</span></td><td><span class="tag tag-danger">High</span></td><td><span class="tag tag-green">Low</span></td></tr>
+          <tr><td><strong>Construction overrun</strong></td><td><span class="tag tag-warn">Medium</span></td><td><span class="tag tag-danger">High</span></td><td><span class="tag tag-warn">Medium</span></td></tr>
         </tbody>
       </table>
 
       <div class="cards-2" style="margin-top:1.2rem">
-        <div class="risk-card high">
-          <div class="risk-hdr"><h3>High Capital Expenditure</h3><span class="tag tag-danger">High/High</span></div>
+        <div class="risk-card med">
+          <div class="risk-hdr"><h3>Supply Chain Delay</h3><span class="tag tag-warn">Medium/High</span></div>
           <ul class="bullet">
-            <li>Milestone-gated payments — no tranche &gt;€8M</li>
-            <li>EU Green Bond at 2.8% (vs 4.2% commercial)</li>
-            <li>€6M contingency ring-fenced</li>
+            <li>Pre-ordered all long-lead items (transformers, chillers, servers)</li>
+            <li>Dual-sourced critical components — no single-vendor exposure</li>
+            <li>6-month buffer built into Year 1 schedule</li>
             <li>Fixed-price contracts with Hochtief &amp; Siemens</li>
           </ul>
         </div>
-        <div class="risk-card med">
-          <div class="risk-hdr"><h3>Technology Uncertainty</h3><span class="tag tag-warn">Medium/High</span></div>
+        <div class="risk-card low">
+          <div class="risk-hdr"><h3>Energy Price Spike</h3><span class="tag tag-green">Low/Medium</span></div>
           <ul class="bullet">
-            <li>All tech live at NordFlow Hamburg &amp; Medcore Utrecht</li>
-            <li>24-month vendor lock-in clauses</li>
-            <li>Orchid scheduler: 18 months live operational data</li>
-          </ul>
-        </div>
-        <div class="risk-card med">
-          <div class="risk-hdr"><h3>Energy Market Volatility</h3><span class="tag tag-warn">High/Medium</span></div>
-          <ul class="bullet">
-            <li>20-yr fixed PPA at €0.042/kWh — signed before groundbreaking</li>
-            <li>55% solar = zero marginal fuel cost</li>
+            <li>15-yr wind PPA locked at €0.042/kWh — signed before groundbreaking</li>
+            <li>60% on-site solar = zero marginal fuel cost</li>
             <li>4 MWh BESS provides 4-hr grid independence</li>
           </ul>
         </div>
         <div class="risk-card low">
-          <div class="risk-hdr"><h3>Regulatory Constraints</h3><span class="tag tag-warn">Medium/High → </span><span class="tag tag-green">Low</span></div>
+          <div class="risk-hdr"><h3>Regulatory Change</h3><span class="tag tag-green">Low/High</span></div>
           <ul class="bullet">
-            <li>Pre-consultation completed June 2026 — no objections</li>
-            <li>Full-time compliance officer assigned to project</li>
+            <li>EU-aligned from day one — Taxonomy, CSRD, EED, EN 50600, WEEE, GDPR/NIS2</li>
+            <li>Full-time compliance officer on the project</li>
             <li>12 prior EU regulatory submissions completed</li>
+            <li>Pre-consultation completed June 2026 — no objections</li>
+          </ul>
+        </div>
+        <div class="risk-card med">
+          <div class="risk-hdr"><h3>Construction Overrun</h3><span class="tag tag-warn">Medium/High</span></div>
+          <ul class="bullet">
+            <li><strong>8% contingency built into the €50M budget</strong> — not bolted on</li>
+            <li>Milestone-gated payments — no tranche &gt;€8M</li>
+            <li>EU Green Bond at 2.8% (vs 4.2% commercial) locks financing cost</li>
+            <li>Same team, brief-to-handover, on every project</li>
           </ul>
         </div>
       </div>
@@ -588,10 +589,10 @@
           <p style="font-size:.72rem;color:var(--muted);margin-bottom:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em">Risk Matrix</p>
           <div class="matrix">
             <div class="m-ax m-ax-v">Likelihood ↑</div>
-            <div class="m-cell m-hm">Energy<br/>Volatility</div>
-            <div class="m-cell m-hh">Capital<br/>Expenditure</div>
-            <div class="m-cell m-mm">Regulatory</div>
-            <div class="m-cell m-mh">Technology<br/>Uncertainty</div>
+            <div class="m-cell m-mm">Energy<br/>Price Spike</div>
+            <div class="m-cell m-mh">Supply Chain<br/>&amp; Overrun</div>
+            <div class="m-cell m-mm">—</div>
+            <div class="m-cell m-mm">Regulatory<br/>Change</div>
             <div></div>
             <div class="m-ax" style="font-size:.6rem">Low impact</div>
             <div class="m-ax" style="font-size:.6rem">High impact →</div>
@@ -601,7 +602,7 @@
           <p style="margin-bottom:.5rem"><span style="color:var(--danger);font-weight:700">■ Red</span> — active management + contractual mitigation</p>
           <p style="margin-bottom:.5rem"><span style="color:var(--warn);font-weight:700">■ Amber</span> — monitored monthly, mitigation in place</p>
           <p><span style="color:var(--green);font-weight:700">■ Green</span> — standard project management sufficient</p>
-          <p style="margin-top:.8rem">After mitigations: all four risks move to amber or green.</p>
+          <p style="margin-top:.8rem">After mitigations: all four risks move to amber or green. <strong>No red residual risk.</strong></p>
         </div>
       </div>
     </div>
@@ -666,7 +667,7 @@
               <span class="chip">80 racks live (M30)</span>
               <span class="chip">EN 50600 certified (M33)</span>
               <span class="chip">First clients (M36) ← go-live</span>
-              <span class="chip">99.99% SLA active</span>
+              <span class="chip">99.982% uptime active</span>
             </div>
           </div>
         </div>
@@ -674,9 +675,10 @@
           <div class="tl-dot">4</div>
           <div class="tl-body">
             <div class="tl-year">Year 4 — Full Operations</div>
-            <h3>Full Capacity · CSRD · Handover</h3>
+            <h3>Full Capacity · Net-Zero · CSRD · Handover</h3>
             <div class="tl-chips">
               <span class="chip">200 racks (M42)</span>
+              <span class="chip" style="background:#dcfce7;color:#15803d">🌱 Operational net-zero (M45)</span>
               <span class="chip">First CSRD report (M48)</span>
               <span class="chip">Handover (M48) ← final sign-off</span>
             </div>
@@ -688,20 +690,20 @@
     <!-- NEXT STEPS -->
     <div class="page" id="page-next">
       <div class="pill">Close &amp; Next Steps</div>
-      <h2>If you say yes <span class="hl">today</span></h2>
+      <h2>Three steps to <span class="hl">begin</span></h2>
 
       <div style="margin-top:1.5rem">
         <div class="step-box">
           <div class="step-num">1</div>
-          <div><h3>Kick-off workshop — within 2 weeks</h3><p>Half-day at your offices or Crane Berlin HQ. Confirm scope, meet your project team, walk the roadmap.</p></div>
+          <div><h3>Sign Letter of Intent — by 21 July 2026</h3><p>The LOI locks scope, price and timeline. €50M budget confirmed. Nothing binding on either side until the Design &amp; Build contract in Step 3 — the LOI simply reserves the team and unlocks detailed engineering.</p></div>
         </div>
         <div class="step-box">
           <div class="step-num">2</div>
-          <div><h3>Contracts &amp; team assignment — weeks 3–4</h3><p>Design &amp; Build contract signed. Named project team assigned. EU Green Bond application submitted. Fixed-price subcontractors engaged.</p></div>
+          <div><h3>Detailed design delivered — Week 6</h3><p>Full site schematics, energy plan and hardware BOM in your portal. TÜV Rheinland pre-audit checklist. Ready for your sign-off before groundwork commits.</p></div>
         </div>
         <div class="step-box">
           <div class="step-num">3</div>
-          <div><h3>Phase 1 begins — month 2</h3><p>Architecture sprint kicks off. Planning application submitted. Live project dashboard access for Birdy Capital from Day 1.</p></div>
+          <div><h3>Kick-off meeting — Week 8</h3><p>Half-day at your offices or Crane Berlin HQ. Design &amp; Build contract signed. Named project team assigned. Live project dashboard access for Birdy Capital from Day 1.</p></div>
         </div>
       </div>
 
@@ -711,8 +713,8 @@
 
       <div style="text-align:center;padding:2rem 0">
         <p style="font-size:1rem;margin-bottom:1.2rem;color:var(--text)">Birdy Capital — <strong style="color:var(--green)">your green light is all we need.</strong></p>
-        <button class="approve-btn" onclick="handleApprove()">✓ &nbsp; Approve Phase 1</button>
-        <div class="approved-msg" id="approved-msg">Phase 1 approved. We will contact you within one business day to schedule the kick-off workshop. Thank you, Birdy Capital.</div>
+        <button class="approve-btn" onclick="handleApprove()">✓ &nbsp; Sign Letter of Intent</button>
+        <div class="approved-msg" id="approved-msg">LOI recorded. We will contact you within one business day to confirm the design-delivery schedule. Thank you, Birdy Capital.</div>
       </div>
 
       <div class="cards-3" style="margin-top:1.5rem">
@@ -787,9 +789,9 @@
   function startSidebarTick() {
     function tick() {
       const frac = Date.now()/1000 - EPOCH;
-      document.getElementById('sl-pue').textContent    = (1.150 + 0.015*Math.sin(2*Math.PI*frac/31557600)).toFixed(3);
+      document.getElementById('sl-pue').textContent    = (1.200 + 0.010*Math.sin(2*Math.PI*frac/31557600)).toFixed(3);
       document.getElementById('sl-kwh').textContent    = (frac*0.00002334).toFixed(1);
-      document.getElementById('sl-uptime').textContent = (99.994 + 0.003*Math.sin(2*Math.PI*frac/604800)).toFixed(3);
+      document.getElementById('sl-uptime').textContent = (99.982 + 0.003*Math.sin(2*Math.PI*frac/604800)).toFixed(3);
     }
     tick(); setInterval(tick, 500);
   }
