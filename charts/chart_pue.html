@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1A3C2E; width: 540px; height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: Calibri, sans-serif; }
+  h2 { color: #fff; font-size: 18px; font-weight: 600; margin-bottom: 24px; letter-spacing: 0.5px; }
+  .bars { display: flex; gap: 60px; align-items: flex-end; height: 260px; padding: 0 40px; }
+  .bar-group { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .bar-wrap { display: flex; align-items: flex-end; height: 220px; }
+  .bar { width: 100px; border-radius: 4px 4px 0 0; position: relative; display: flex; justify-content: center; }
+  .bar .val { position: absolute; top: -34px; font-size: 28px; font-weight: 700; color: #fff; }
+  .label { color: #ccc; font-size: 15px; text-align: center; }
+  .badge { margin-top: 18px; background: #2E7D5A; color: #6FCF97; font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 20px; }
+</style>
+</head>
+<body>
+  <h2>Power Usage Effectiveness (PUE)</h2>
+  <div class="bars">
+    <div class="bar-group">
+      <div class="bar-wrap">
+        <div class="bar" style="height:220px; background:#2E7D5A;">
+          <span class="val">1.6</span>
+        </div>
+      </div>
+      <div class="label">Industry<br>Average</div>
+    </div>
+    <div class="bar-group">
+      <div class="bar-wrap">
+        <div class="bar" style="height:165px; background:#F2C94E;">
+          <span class="val" style="color:#1A3C2E;">1.2</span>
+        </div>
+      </div>
+      <div class="label" style="color:#6FCF97; font-weight:700;">NexVerde</div>
+    </div>
+  </div>
+  <div class="badge">25% less energy wasted</div>
+</body>
+</html>
