@@ -14,19 +14,6 @@
 
 ---
 
-## Slide 0 — Commissioning (Opening Hold)
-
-**Speaker:** — · **Time:** before presentation starts / while audience settles
-
-- This slide is on screen before the pitch begins — don't rush to advance it
-- Greet Ms. Birdy and any other attendees as they settle in
-- Introduce both presenters by name and role
-- Note the partnership framing: Birdy Capital commissioned Crane — this is a response to a brief, not a cold pitch
-- Let the room settle; advance only when everyone is seated and ready
-- No script needed — keep it conversational and brief
-
----
-
 ## Slide 1 — Title / NexVerde
 
 **Speaker:** A · **Time:** 1 min
@@ -227,18 +214,6 @@
 - The LOI ask is low-commitment by design — it's an easy yes
 - If they hesitate: "We can also schedule a technical deep-dive for your engineering team before the LOI — we're happy to do that within the week."
 - Leave silence after "Thank you" — let them respond, don't fill the pause
-
----
-
-## Slide 11 — Closing (Partnership Hold)
-
-**Speaker:** A · **Time:** 30 sec
-
-- Thank the audience — keep it short and genuine, not formulaic
-- Restate the partnership framing: Birdy Capital × Crane, building something real together
-- Reference the portal one more time: everything discussed is already live and accessible
-- Leave silence — do not fill it; let Ms. Birdy respond first
-- If no immediate reaction: invite questions with an open hand, not a closed prompt
 
 ---
 
