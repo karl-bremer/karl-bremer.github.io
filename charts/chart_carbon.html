@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1A3C2E; width: 660px; height: 400px; font-family: Calibri, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+  h2 { color: #fff; font-size: 17px; font-weight: 600; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="620" height="340"></canvas>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const pad = { top: 30, right: 30, bottom: 50, left: 60 };
+const cw = W - pad.left - pad.right;
+const ch = H - pad.top - pad.bottom;
+
+const points = [
+  { x: 0,    y: 100 },
+  { x: 0.25, y: 75  },
+  { x: 0.5,  y: 50  },
+  { x: 0.75, y: 25  },
+  { x: 1,    y: 0   },
+];
+const labels = ['Start', 'Year 1', 'Year 2', 'Year 3', 'Year 4\nNET-ZERO'];
+
+function toCanvas(px, py) {
+  return {
+    x: pad.left + px * cw,
+    y: pad.top  + (1 - py / 100) * ch
+  };
+}
+
+// fill area
+ctx.beginPath();
+points.forEach((p, i) => {
+  const c = toCanvas(p.x, p.y);
+  i === 0 ? ctx.moveTo(c.x, c.y) : ctx.lineTo(c.x, c.y);
+});
+const base = toCanvas(1, 0);
+const base0 = toCanvas(0, 0);
+ctx.lineTo(base.x, base.y);
+ctx.lineTo(base0.x, base0.y);
+ctx.closePath();
+ctx.fillStyle = 'rgba(111,207,151,0.15)';
+ctx.fill();
+
+// zero line
+ctx.beginPath();
+const z = toCanvas(0, 0);
+const z1 = toCanvas(1, 0);
+ctx.moveTo(z.x, z.y);
+ctx.lineTo(z1.x, z1.y);
+ctx.strokeStyle = '#2E7D5A';
+ctx.lineWidth = 1.5;
+ctx.setLineDash([6, 4]);
+ctx.stroke();
+ctx.setLineDash([]);
+
+// line
+ctx.beginPath();
+points.forEach((p, i) => {
+  const c = toCanvas(p.x, p.y);
+  i === 0 ? ctx.moveTo(c.x, c.y) : ctx.lineTo(c.x, c.y);
+});
+ctx.strokeStyle = '#6FCF97';
+ctx.lineWidth = 3;
+ctx.stroke();
+
+// dots
+points.forEach(p => {
+  const c = toCanvas(p.x, p.y);
+  ctx.beginPath();
+  ctx.arc(c.x, c.y, 7, 0, 2*Math.PI);
+  ctx.fillStyle = '#F2C94E';
+  ctx.strokeStyle = '#1A3C2E';
+  ctx.lineWidth = 2;
+  ctx.fill();
+  ctx.stroke();
+});
+
+// y axis labels
+ctx.fillStyle = '#CCCCCC';
+ctx.font = '13px Calibri, sans-serif';
+ctx.textAlign = 'right';
+[0, 25, 50, 75, 100].forEach(v => {
+  const c = toCanvas(0, v);
+  ctx.fillText(v + '%', pad.left - 8, c.y + 4);
+  // grid line
+  ctx.beginPath();
+  ctx.moveTo(pad.left, c.y);
+  ctx.lineTo(W - pad.right, c.y);
+  ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+});
+
+// x axis labels
+ctx.textAlign = 'center';
+ctx.fillStyle = '#CCCCCC';
+ctx.font = '13px Calibri, sans-serif';
+points.forEach((p, i) => {
+  const c = toCanvas(p.x, 0);
+  const lines = labels[i].split('\n');
+  lines.forEach((l, li) => {
+    const isLast = i === points.length - 1;
+    ctx.fillStyle = isLast ? '#6FCF97' : '#CCCCCC';
+    ctx.font = isLast ? 'bold 13px Calibri, sans-serif' : '13px Calibri, sans-serif';
+    ctx.fillText(l, c.x, H - pad.bottom + 18 + li * 16);
+  });
+});
+
+// axis label
+ctx.fillStyle = '#CCCCCC';
+ctx.font = '13px Calibri, sans-serif';
+ctx.save();
+ctx.translate(14, H/2);
+ctx.rotate(-Math.PI/2);
+ctx.textAlign = 'center';
+ctx.fillText('Carbon Index', 0, 0);
+ctx.restore();
+</script>
+</body>
+</html>

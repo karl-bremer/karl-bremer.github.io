@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1A3C2E; width: 900px; height: 380px; font-family: Calibri, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="860" height="350"></canvas>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+
+const phases = [
+  { label: 'Planning & Permits',    start: 0,   end: 1,    color: '#2E7D5A' },
+  { label: 'Civil Works',           start: 0.5, end: 2,    color: '#6FCF97' },
+  { label: 'Energy Systems',        start: 1.5, end: 3,    color: '#F2C94E' },
+  { label: 'IT Fit-out & Testing',  start: 2.5, end: 3.75, color: '#2E7D5A' },
+  { label: 'Go-live & Certification', start: 3.5, end: 4,  color: '#F2C94E' },
+];
+
+const pad = { top: 50, right: 30, bottom: 30, left: 30 };
+const cw = W - pad.left - pad.right;
+const ch = H - pad.top - pad.bottom;
+const total = 4; // years
+const barH = 36;
+const gap = (ch - phases.length * barH) / (phases.length + 1);
+
+// x-axis ticks at top
+const ticks = [0, 1, 2, 3, 4];
+const tickLabels = ['Start', 'Year 1', 'Year 2', 'Year 3', 'Year 4'];
+
+function xPos(year) { return pad.left + (year / total) * cw; }
+
+// background grid
+ticks.forEach(t => {
+  ctx.beginPath();
+  ctx.moveTo(xPos(t), pad.top);
+  ctx.lineTo(xPos(t), H - pad.bottom);
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+});
+
+// tick labels
+ctx.fillStyle = '#CCCCCC';
+ctx.font = '14px Calibri, sans-serif';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'bottom';
+ticks.forEach((t, i) => {
+  ctx.fillStyle = t === 4 ? '#6FCF97' : '#CCCCCC';
+  ctx.font = t === 4 ? 'bold 14px Calibri, sans-serif' : '14px Calibri, sans-serif';
+  ctx.fillText(tickLabels[i], xPos(t), pad.top - 6);
+});
+
+// divider line
+ctx.beginPath();
+ctx.moveTo(pad.left, pad.top);
+ctx.lineTo(W - pad.right, pad.top);
+ctx.strokeStyle = '#2E7D5A';
+ctx.lineWidth = 1.5;
+ctx.stroke();
+
+// bars
+phases.forEach((p, i) => {
+  const y = pad.top + gap + i * (barH + gap);
+  const x = xPos(p.start);
+  const w = xPos(p.end) - xPos(p.start);
+
+  // bar
+  ctx.fillStyle = p.color;
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, barH, 4);
+  ctx.fill();
+
+  // label — inside if wide enough, outside left otherwise
+  const labelColor = p.color === '#F2C94E' ? '#1A3C2E' : '#1A3C2E';
+  ctx.font = 'bold 13px Calibri, sans-serif';
+  ctx.textBaseline = 'middle';
+  const measured = ctx.measureText(p.label).width;
+  if (w > measured + 20) {
+    ctx.fillStyle = labelColor;
+    ctx.textAlign = 'center';
+    ctx.fillText(p.label, x + w / 2, y + barH / 2);
+  } else {
+    ctx.fillStyle = '#FFFFFF';
+    ctx.textAlign = 'right';
+    ctx.fillText(p.label, x - 8, y + barH / 2);
+  }
+});
+</script>
+</body>
+</html>

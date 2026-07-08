@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1A3C2E; width: 540px; height: 480px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: Calibri, sans-serif; gap: 20px; }
+  canvas { display: block; }
+  .legend { display: flex; flex-direction: column; gap: 10px; }
+  .leg-item { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 15px; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<canvas id="c" width="260" height="260"></canvas>
+<div class="legend">
+  <div class="leg-item"><div class="dot" style="background:#6FCF97"></div>60% — On-site solar</div>
+  <div class="leg-item"><div class="dot" style="background:#F2C94E"></div>30% — Wind PPA (15-yr lock)</div>
+  <div class="leg-item"><div class="dot" style="background:#2E7D5A"></div>10% — Green grid tariff</div>
+</div>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const cx = 130, cy = 130, outer = 110, inner = 65;
+const slices = [
+  { pct: 0.60, color: '#6FCF97', label: '60%' },
+  { pct: 0.30, color: '#F2C94E', label: '30%' },
+  { pct: 0.10, color: '#2E7D5A', label: '10%' },
+];
+let start = -Math.PI / 2;
+slices.forEach(s => {
+  const end = start + s.pct * 2 * Math.PI;
+  // slice
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.arc(cx, cy, outer, start, end);
+  ctx.closePath();
+  ctx.fillStyle = s.color;
+  ctx.fill();
+  // label
+  const mid = start + (end - start) / 2;
+  const lr = (outer + inner) / 2;
+  const lx = cx + lr * Math.cos(mid);
+  const ly = cy + lr * Math.sin(mid);
+  ctx.fillStyle = '#1A3C2E';
+  ctx.font = 'bold 15px Calibri, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(s.label, lx, ly);
+  start = end;
+});
+// hole
+ctx.beginPath();
+ctx.arc(cx, cy, inner, 0, 2 * Math.PI);
+ctx.fillStyle = '#1A3C2E';
+ctx.fill();
+// centre text
+ctx.fillStyle = '#6FCF97';
+ctx.font = 'bold 14px Calibri, sans-serif';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText('100%', cx, cy - 9);
+ctx.fillStyle = '#fff';
+ctx.font = '11px Calibri, sans-serif';
+ctx.fillText('renewable', cx, cy + 9);
+</script>
+</body>
+</html>
