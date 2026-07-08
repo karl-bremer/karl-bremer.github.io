@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crane — Sustainable Data Centre Pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:     #0E1F16;
+  --bg2:    #132A1C;
+  --bg3:    #183322;
+  --mid:    #2E7D5A;
+  --light:  #6FCF97;
+  --gold:   #F2C94E;
+  --white:  #F0F5F2;
+  --grey:   #B8CEC4;
+  --grey2:  #6B8C7C;
+  --danger: #E57373;
+  --s: 1px;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: #060F0A;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+#stage {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+#deck {
+  position: relative;
+  width: min(100vw, 177.78vh);
+  height: min(56.25vw, 100vh);
+  overflow: hidden;
+  box-shadow: 0 60px 140px rgba(0,0,0,0.85), 0 0 0 1px rgba(46,125,90,0.15);
+}
+
+.slide {
+  position: absolute; inset: 0;
+  background: var(--bg);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(calc(8 * var(--s)));
+  transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+.slide.active .anim {
+  animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both;
+}
+.slide.active .anim-1 { animation-delay: 0.04s; }
+.slide.active .anim-2 { animation-delay: 0.12s; }
+.slide.active .anim-3 { animation-delay: 0.20s; }
+.slide.active .anim-4 { animation-delay: 0.28s; }
+.slide.active .anim-5 { animation-delay: 0.36s; }
+.slide.active .anim-6 { animation-delay: 0.44s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(calc(18 * var(--s))); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes growWidth {
+  from { transform: scaleX(0); } to { transform: scaleX(1); }
+}
+
+/* ── Background texture ────────────────────────────────── */
+.slide-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 70% 60% at 88% 12%, rgba(46,125,90,0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 8% 92%, rgba(46,125,90,0.08) 0%, transparent 60%);
+}
+
+/* ── Left accent ───────────────────────────────────────── */
+.accent-bar {
+  position: absolute; left: 0; top: 0;
+  width: calc(10 * var(--s)); height: 100%;
+  background: linear-gradient(180deg, var(--light) 0%, var(--mid) 60%, transparent 100%);
+  opacity: 0.8;
+}
+
+/* ── Typography primitives ─────────────────────────────── */
+.slide-label {
+  position: absolute;
+  top: calc(26 * var(--s));
+  left: calc(46 * var(--s));
+  font-size: calc(10 * var(--s));
+  font-weight: 700;
+  color: var(--light);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.slide-title {
+  position: absolute;
+  top: calc(58 * var(--s));
+  left: calc(46 * var(--s));
+  right: calc(40 * var(--s));
+  font-family: 'Fraunces', serif;
+  font-size: calc(50 * var(--s));
+  color: var(--white);
+  line-height: 1.1;
+  font-weight: 700;
+}
+.divider {
+  position: absolute;
+  top: calc(168 * var(--s));
+  left: calc(46 * var(--s));
+  width: calc(120 * var(--s));
+  height: calc(2 * var(--s));
+  background: var(--light);
+  border-radius: calc(2 * var(--s));
+  transform-origin: left;
+}
+.slide.active .divider { animation: growWidth 0.5s 0.08s cubic-bezier(0.22,1,0.36,1) both; }
+
+/* ── Cards ─────────────────────────────────────────────── */
+.card {
+  position: absolute;
+  background: var(--bg2);
+  border-radius: calc(10 * var(--s));
+  border: calc(1 * var(--s)) solid rgba(111,207,151,0.12);
+  overflow: hidden;
+}
+.card-top-line {
+  width: 100%; height: calc(3 * var(--s));
+  background: linear-gradient(90deg, var(--light), var(--mid));
+}
+.card-big {
+  font-family: 'Fraunces', serif;
+  font-size: calc(52 * var(--s));
+  color: var(--light);
+  text-align: center;
+  padding-top: calc(22 * var(--s));
+  line-height: 1;
+  font-weight: 700;
+}
+.card-small {
+  font-size: calc(14 * var(--s));
+  color: var(--grey);
+  text-align: center;
+  padding: calc(10 * var(--s)) calc(16 * var(--s)) 0;
+  line-height: 1.45;
+  font-weight: 300;
+}
+
+/* ── Commit cards ──────────────────────────────────────── */
+.commit-card {
+  position: absolute;
+  background: var(--bg2);
+  border-radius: calc(10 * var(--s));
+  border: calc(1 * var(--s)) solid rgba(111,207,151,0.12);
+  overflow: hidden;
+}
+.commit-card-left {
+  position: absolute; left:0; top:0; bottom:0;
+  width: calc(5 * var(--s));
+  background: linear-gradient(180deg, var(--light), var(--mid));
+}
+.commit-tag {
+  position: absolute;
+  top: calc(22 * var(--s)); left: calc(24 * var(--s));
+  font-size: calc(10 * var(--s)); font-weight: 700;
+  color: var(--light); letter-spacing: .15em; text-transform: uppercase;
+}
+.commit-title {
+  position: absolute;
+  top: calc(48 * var(--s)); left: calc(24 * var(--s)); right: calc(14 * var(--s));
+  font-family: 'Fraunces', serif;
+  font-size: calc(28 * var(--s)); color: var(--white); line-height: 1.15; font-weight: 700;
+}
+.commit-desc {
+  position: absolute;
+  top: calc(128 * var(--s)); left: calc(24 * var(--s)); right: calc(14 * var(--s));
+  font-size: calc(13 * var(--s)); color: var(--grey); line-height: 1.55; font-weight: 300;
+}
+
+/* ── Bullets ───────────────────────────────────────────── */
+.bullets { position: absolute; list-style: none; }
+.bullets li {
+  color: var(--white);
+  font-size: calc(18 * var(--s));
+  padding: calc(9 * var(--s)) 0;
+  padding-left: calc(20 * var(--s));
+  line-height: 1.4;
+  position: relative; font-weight: 300;
+}
+.bullets li::before {
+  content: '';
+  position: absolute; left: 0; top: calc(17 * var(--s));
+  width: calc(8 * var(--s)); height: calc(8 * var(--s));
+  border-radius: 50%; background: var(--light);
+}
+.bullets li strong { color: var(--light); font-weight: 700; }
+
+/* ── KPI cards ─────────────────────────────────────────── */
+.kpi {
+  position: absolute;
+  background: var(--bg2);
+  border-radius: calc(8 * var(--s));
+  border: calc(1 * var(--s)) solid rgba(111,207,151,0.12);
+  overflow: hidden; display: flex; align-items: stretch;
+}
+.kpi-bar { width: calc(5 * var(--s)); flex-shrink: 0; }
+.kpi-inner { padding: calc(12 * var(--s)) calc(18 * var(--s)); }
+.kpi-big { font-family: 'Fraunces', serif; font-size: calc(40 * var(--s)); line-height: 1; font-weight: 700; }
+.kpi-label { font-size: calc(12 * var(--s)); color: var(--grey); margin-top: calc(5 * var(--s)); font-weight: 400; }
+
+/* ── Risk table ────────────────────────────────────────── */
+table.risk { width: 100%; border-collapse: collapse; font-family: 'Plus Jakarta Sans', sans-serif; }
+table.risk th {
+  background: rgba(46,125,90,0.35);
+  color: var(--white); font-size: calc(11 * var(--s)); font-weight: 700;
+  padding: calc(10 * var(--s)) calc(12 * var(--s));
+  text-align: left; letter-spacing: .06em; text-transform: uppercase;
+}
+table.risk td {
+  color: var(--white); font-size: calc(13 * var(--s));
+  padding: calc(9 * var(--s)) calc(12 * var(--s));
+  vertical-align: middle; line-height: 1.35; font-weight: 300;
+  border-bottom: calc(1 * var(--s)) solid rgba(46,125,90,0.1);
+}
+table.risk tr:nth-child(odd)  td { background: rgba(255,255,255,0.02); }
+table.risk tr:nth-child(even) td { background: rgba(0,0,0,0.08); }
+
+.badge {
+  display: inline-block;
+  padding: calc(3*var(--s)) calc(10*var(--s));
+  border-radius: calc(20*var(--s));
+  font-size: calc(10*var(--s)); font-weight: 700; letter-spacing: .06em;
+}
+.badge-high   { background: rgba(229,115,115,0.15); color: #E57373; border: 1px solid rgba(229,115,115,0.3); }
+.badge-medium { background: rgba(242,201,78,0.15);  color: var(--gold); border: 1px solid rgba(242,201,78,0.3); }
+.badge-low    { background: rgba(111,207,151,0.15); color: var(--light); border: 1px solid rgba(111,207,151,0.3); }
+
+/* ── Step cards ────────────────────────────────────────── */
+.step-num {
+  font-family: 'Fraunces', serif; font-size: calc(56 * var(--s));
+  color: var(--mid); text-align: center;
+  padding-top: calc(20 * var(--s)); line-height: 1; font-weight: 700;
+}
+.step-title {
+  font-family: 'Fraunces', serif; font-size: calc(20 * var(--s));
+  color: var(--white); text-align: center;
+  padding: calc(10 * var(--s)) calc(14 * var(--s)) 0; line-height: 1.3; font-weight: 700;
+}
+.step-when {
+  font-size: calc(14 * var(--s)); color: var(--light);
+  text-align: center; padding-top: calc(8 * var(--s)); font-weight: 600;
+}
+
+/* ── Energy legend row ─────────────────────────────────── */
+.e-row {
+  position: absolute; display: flex; align-items: center;
+  gap: calc(16 * var(--s));
+}
+.e-dot {
+  width: calc(14 * var(--s)); height: calc(14 * var(--s));
+  border-radius: 50%; flex-shrink: 0;
+}
+.e-pct {
+  font-family: 'Fraunces', serif; font-size: calc(42 * var(--s));
+  color: var(--white); line-height: 1; font-weight: 700;
+}
+.e-label { font-size: calc(14 * var(--s)); color: var(--grey); line-height: 1.35; }
+
+/* ── CTA bar ───────────────────────────────────────────── */
+.cta-bar {
+  position: absolute;
+  left: calc(40 * var(--s)); right: calc(40 * var(--s));
+  background: rgba(46,125,90,0.15);
+  border: calc(1 * var(--s)) solid rgba(111,207,151,0.25);
+  border-radius: calc(8 * var(--s));
+  display: flex; align-items: center; justify-content: center;
+  gap: calc(12 * var(--s));
+  font-size: calc(16 * var(--s)); font-weight: 500; color: var(--light);
+}
+.cta-dot { width: calc(6*var(--s)); height: calc(6*var(--s)); border-radius: 50%; background: var(--light); flex-shrink: 0; }
+
+/* ── Speaker notes ─────────────────────────────────────── */
+#notes-panel {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 200px;
+  background: rgba(6, 15, 10, 0.97);
+  border-top: 1px solid rgba(46,125,90,0.4);
+  padding: 16px 24px; z-index: 200;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+#notes-panel.visible { transform: translateY(0); }
+#notes-label { font-size: 10px; font-weight: 700; color: var(--light); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; opacity: 0.7; }
+#notes-text  { font-size: 14px; color: var(--grey); line-height: 1.65; font-weight: 300; }
+#notes-hint  { position: absolute; top: 14px; right: 20px; font-size: 11px; color: var(--grey2); }
+
+/* ── Progress bar ──────────────────────────────────────── */
+#progress-bar {
+  position: fixed; top: 0; left: 0; height: 2px;
+  background: linear-gradient(90deg, var(--mid), var(--light));
+  z-index: 300; transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Nav ───────────────────────────────────────────────── */
+#nav {
+  position: fixed; bottom: 22px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px;
+  z-index: 100; transition: opacity 0.3s;
+}
+#nav.hidden { opacity: 0; pointer-events: none; }
+#nav button {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(46,125,90,0.5);
+  background: rgba(14,31,22,0.9);
+  color: var(--light); font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, border-color .2s, transform .15s;
+  backdrop-filter: blur(8px);
+}
+#nav button:hover:not(:disabled) { background: var(--mid); color: #fff; border-color: var(--mid); transform: scale(1.1); }
+#nav button:disabled { opacity: 0.2; cursor: default; }
+#counter {
+  color: var(--light); font-size: 11px; font-weight: 600;
+  min-width: 52px; text-align: center;
+  background: rgba(14,31,22,0.9);
+  border: 1px solid rgba(46,125,90,0.5);
+  border-radius: 20px; padding: 6px 14px;
+  letter-spacing: .08em; backdrop-filter: blur(8px);
+}
+
+#dots {
+  position: fixed; bottom: 70px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 5px; z-index: 100;
+}
+.dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(46,125,90,0.4);
+  transition: background .25s, transform .25s, width .25s;
+  cursor: pointer;
+}
+.dot.active { background: var(--light); transform: scale(1.4); width: 16px; border-radius: 3px; }
+
+#hints {
+  position: fixed; top: 14px; right: 14px;
+  display: flex; gap: 6px; z-index: 100;
+  opacity: 0; transition: opacity 0.3s;
+}
+#hints.visible { opacity: 1; }
+.hint-key {
+  background: rgba(14,31,22,0.88);
+  border: 1px solid rgba(46,125,90,0.4);
+  border-radius: 4px; padding: 3px 8px;
+  font-size: 10px; color: var(--grey2);
+  backdrop-filter: blur(4px);
+}
+.hint-key span { color: var(--light); font-weight: 700; }
+
+canvas { display: block; }
+
+/* ── Slide 1 ───────────────────────────────────────────── */
+.s1-brand {
+  position: absolute;
+  top: calc(118 * var(--s)); left: calc(52 * var(--s));
+  display: flex; align-items: center; gap: calc(22 * var(--s));
+  font-family: 'Fraunces', serif;
+  font-size: calc(100 * var(--s));
+  color: var(--white); line-height: 1; letter-spacing: -.02em; font-weight: 700;
+}
+.s1-tagline {
+  position: absolute;
+  top: calc(252 * var(--s)); left: calc(54 * var(--s));
+  font-size: calc(22 * var(--s)); color: var(--light); font-weight: 300; letter-spacing: .01em;
+}
+.s1-rule {
+  position: absolute;
+  top: calc(302 * var(--s)); left: calc(52 * var(--s));
+  width: calc(680 * var(--s)); height: calc(1 * var(--s));
+  background: linear-gradient(90deg, var(--mid), transparent);
+  transform-origin: left;
+}
+.slide.active .s1-rule { animation: growWidth 0.7s 0.25s cubic-bezier(0.22,1,0.36,1) both; }
+.s1-sub {
+  position: absolute; left: calc(54 * var(--s));
+  font-size: calc(16 * var(--s)); color: var(--grey); font-weight: 300;
+}
+.s1-badge {
+  position: absolute;
+  bottom: calc(42 * var(--s)); right: calc(50 * var(--s));
+  font-size: calc(11 * var(--s)); color: var(--grey2);
+  font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+}
+/* decorative circles */
+.s1-c1 {
+  position: absolute; right: calc(-60 * var(--s)); top: calc(-80 * var(--s));
+  width: calc(620 * var(--s)); height: calc(620 * var(--s));
+  border-radius: 50%; border: calc(1 * var(--s)) solid rgba(46,125,90,0.1);
+  pointer-events: none;
+}
+.s1-c2 {
+  position: absolute; right: calc(60 * var(--s)); top: calc(10 * var(--s));
+  width: calc(380 * var(--s)); height: calc(380 * var(--s));
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(46,125,90,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.s1-icon {
+  position: absolute; right: calc(100 * var(--s)); top: calc(90 * var(--s));
+  font-size: calc(220 * var(--s)); opacity: 0.04; pointer-events: none; line-height: 1;
+}
+
+/* ── Brand mark (persistent across all slides) ─────────── */
+#brand-mark {
+  position: absolute;
+  top: calc(18 * var(--s));
+  right: calc(22 * var(--s));
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--s));
+  z-index: 50;
+  pointer-events: none;
+}
+#brand-mark svg {
+  width: calc(30 * var(--s));
+  height: calc(30 * var(--s));
+  flex-shrink: 0;
+}
+#brand-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: calc(15 * var(--s));
+  font-weight: 700;
+  color: #16a34a;
+  letter-spacing: .04em;
+}
+
+/* ── Client cards (slide 2) ────────────────────────────── */
+.client-card {
+  position: absolute;
+  width: calc(386 * var(--s));
+  display: flex;
+  align-items: center;
+  gap: calc(14 * var(--s));
+  background: var(--bg2);
+  border: calc(1 * var(--s)) solid rgba(111,207,151,0.1);
+  border-radius: calc(8 * var(--s));
+  padding: calc(12 * var(--s)) calc(16 * var(--s));
+}
+.client-card img {
+  width: calc(44 * var(--s));
+  height: calc(44 * var(--s));
+  border-radius: calc(6 * var(--s));
+  object-fit: contain;
+  background: #fff;
+  padding: calc(4 * var(--s));
+  flex-shrink: 0;
+}
+.client-logo-placeholder {
+  width: calc(44 * var(--s));
+  height: calc(44 * var(--s));
+  border-radius: calc(6 * var(--s));
+  background: var(--mid);
+  color: var(--white);
+  font-size: calc(14 * var(--s));
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: .04em;
+}
+.client-name {
+  font-size: calc(13 * var(--s));
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+}
+.client-desc {
+  font-size: calc(11 * var(--s));
+  color: var(--grey2);
+  margin-top: calc(3 * var(--s));
+  line-height: 1.4;
+  font-weight: 300;
+}
+
+/* ── Commissioning slide ───────────────────────────────── */
+.s0-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+  gap: calc(28 * var(--s));
+  text-align: center;
+}
+.s0-commission {
+  font-size: calc(11 * var(--s)); font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--grey2); opacity: 0.8;
+}
+.s0-title {
+  font-family: 'Fraunces', serif;
+  font-size: calc(32 * var(--s)); color: var(--white); font-weight: 300;
+  letter-spacing: .01em; line-height: 1.2;
+}
+.s0-logos {
+  display: flex; align-items: center; gap: calc(60 * var(--s));
+}
+.s0-logo-block {
+  display: flex; flex-direction: column; align-items: center;
+  gap: calc(14 * var(--s));
+}
+.s0-logo-mark {
+  width: calc(110 * var(--s)); height: calc(110 * var(--s));
+  border-radius: calc(18 * var(--s));
+  display: flex; align-items: center; justify-content: center;
+}
+.s0-logo-name {
+  font-size: calc(15 * var(--s)); font-weight: 700; color: var(--white);
+  letter-spacing: .04em;
+}
+.s0-logo-sub {
+  font-size: calc(11 * var(--s)); color: var(--grey2); font-weight: 300;
+  margin-top: calc(-8 * var(--s)); letter-spacing: .02em;
+}
+.s0-divider-x {
+  display: flex; flex-direction: column; align-items: center; gap: calc(10 * var(--s));
+}
+.s0-divider-line {
+  width: calc(1 * var(--s)); height: calc(80 * var(--s));
+  background: linear-gradient(180deg, transparent, var(--mid), transparent);
+}
+.s0-divider-label {
+  font-size: calc(10 * var(--s)); color: var(--grey2); letter-spacing: .18em;
+  text-transform: uppercase; font-weight: 600;
+}
+.s0-date {
+  font-size: calc(13 * var(--s)); color: var(--grey2); font-weight: 300;
+  letter-spacing: .06em;
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="hints">
+  <div class="hint-key"><span>→</span> Next</div>
+  <div class="hint-key"><span>←</span> Prev</div>
+  <div class="hint-key"><span>S</span> Notes</div>
+  <div class="hint-key"><span>F</span> Fullscreen</div>
+</div>
+
+<div id="stage"><div id="deck">
+
+<!-- ═══ SLIDE 0 — Commissioning ══════════════════════════ -->
+<div class="slide active" id="s0">
+  <div class="slide-bg"></div>
+  <div class="accent-bar"></div>
+
+  <div class="s0-center">
+    <div class="s0-commission anim anim-1">Commissioned Project Brief</div>
+    <div class="s0-title anim anim-2">A Partnership for Sustainable Infrastructure</div>
+
+    <div class="s0-logos anim anim-3">
+      <!-- Birdy Capital logo block -->
+      <div class="s0-logo-block">
+        <div class="s0-logo-mark" style="background:rgba(15,30,60,0.9);border:calc(1*var(--s)) solid rgba(100,140,220,0.25);">
+          <svg width="72" height="72" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:calc(72*var(--s));height:calc(72*var(--s))">
+            <rect x="14" y="10" width="6" height="40" rx="2" fill="#6b9fd4"/>
+            <path d="M20 10 L38 10 Q46 10 46 20 Q46 30 20 30 Z" fill="#4a7bc4"/>
+            <path d="M20 10 L34 10 Q40 10 40 20 Q40 28 20 28 Z" fill="#6b9fd4" opacity="0.6"/>
+            <path d="M20 30 L40 30 Q50 30 50 42 Q50 50 20 50 Z" fill="#4a7bc4"/>
+            <path d="M20 30 L36 30 Q44 30 44 41 Q44 48 20 48 Z" fill="#6b9fd4" opacity="0.6"/>
+            <path d="M8 22 Q14 18 20 22" stroke="#8bb8e8" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="s0-logo-name">Birdy Capital</div>
+        <div class="s0-logo-sub">Investment &amp; Capital</div>
+      </div>
+
+      <!-- Divider -->
+      <div class="s0-divider-x">
+        <div class="s0-divider-line"></div>
+        <div class="s0-divider-label">×</div>
+        <div class="s0-divider-line"></div>
+      </div>
+
+      <!-- Crane Data Solutions logo block -->
+      <div class="s0-logo-block">
+        <div class="s0-logo-mark" style="background:rgba(10,25,16,0.9);border:calc(1*var(--s)) solid rgba(111,207,151,0.2);">
+          <svg width="72" height="72" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:calc(72*var(--s));height:calc(72*var(--s))">
+            <polygon points="4,28 18,22 14,34" fill="#4ade80" opacity="0.85"/>
+            <polygon points="10,28 18,22 14,34" fill="#16a34a" opacity="0.5"/>
+            <polygon points="44,24 30,20 34,32" fill="#4ade80" opacity="0.85"/>
+            <polygon points="38,25 30,20 34,32" fill="#16a34a" opacity="0.5"/>
+            <polygon points="18,22 24,18 30,20 24,28" fill="#6FCF97"/>
+            <polygon points="18,22 24,28 14,34" fill="#2E7D5A"/>
+            <polygon points="30,20 24,28 34,32" fill="#38a169"/>
+            <polygon points="24,18 27,12 30,14 28,20 24,18" fill="#6FCF97"/>
+            <polygon points="27,12 30,8 33,12 30,14" fill="#86efac"/>
+            <polygon points="33,12 36,10 34,14" fill="#6FCF97"/>
+            <polygon points="14,34 24,28 22,38" fill="#2E7D5A"/>
+            <polygon points="14,34 18,38 22,38 24,28" fill="#38a169" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="s0-logo-name">Crane</div>
+        <div class="s0-logo-sub">Data Solutions</div>
+      </div>
+    </div>
+
+    <div class="s0-date anim anim-4">Sustainable Data Centre — €50M Proposal · 2025</div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 1 — Title ═════════════════════════════════ -->
+<div class="slide" id="s1">
+  <div class="slide-bg"></div>
+  <div class="s1-c1"></div><div class="s1-c2"></div>
+  <div class="s1-icon">⬡</div>
+  <div class="accent-bar"></div>
+  <div class="s1-brand anim anim-1">
+    <svg width="88" height="88" viewBox="0 0 48 48" fill="none" style="width:calc(88 * var(--s));height:calc(88 * var(--s));flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+      <!-- origami crane — flat polygon faces -->
+      <!-- left wing -->
+      <polygon points="4,28 18,22 14,34" fill="#4ade80" opacity="0.85"/>
+      <!-- left wing inner shade -->
+      <polygon points="10,28 18,22 14,34" fill="#16a34a" opacity="0.5"/>
+      <!-- right wing -->
+      <polygon points="44,24 30,20 34,32" fill="#4ade80" opacity="0.85"/>
+      <!-- right wing inner shade -->
+      <polygon points="38,25 30,20 34,32" fill="#16a34a" opacity="0.5"/>
+      <!-- body top-left face -->
+      <polygon points="18,22 24,18 30,20 24,28" fill="#6FCF97"/>
+      <!-- body bottom face -->
+      <polygon points="18,22 24,28 14,34" fill="#2E7D5A"/>
+      <!-- body bottom-right face -->
+      <polygon points="30,20 24,28 34,32" fill="#38a169"/>
+      <!-- neck -->
+      <polygon points="24,18 27,12 30,14 28,20 24,18" fill="#6FCF97"/>
+      <!-- head -->
+      <polygon points="27,12 30,8 33,12 30,14" fill="#86efac"/>
+      <!-- beak -->
+      <polygon points="33,12 36,10 34,14" fill="#6FCF97"/>
+      <!-- tail -->
+      <polygon points="14,34 24,28 22,38" fill="#2E7D5A"/>
+      <polygon points="14,34 18,38 22,38 24,28" fill="#38a169" opacity="0.7"/>
+    </svg>
+    <span>Crane</span>
+  </div>
+  <div class="s1-tagline anim anim-2">Where performance meets the planet.</div>
+  <div class="s1-rule"></div>
+  <div class="s1-sub anim anim-3" style="top:calc(318 * var(--s))">Sustainable Data Centre Proposal</div>
+  <div class="s1-sub anim anim-4" style="top:calc(350 * var(--s))">Commissioned for Birdy Capital</div>
+  <div class="s1-sub anim anim-5" style="top:calc(400 * var(--s));font-size:calc(13*var(--s));color:var(--grey2);font-style:italic;">Named for the crane — the only bird that migrates thousands of kilometres<br>without wasting a wingbeat. Efficient by nature.</div>
+  <div class="s1-badge anim anim-6">€50M · 4 Years · Net-Zero</div>
+</div>
+
+<!-- ═══ SLIDE 2 — Who We Are ════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="slide-bg"></div><div class="accent-bar"></div>
+  <div class="slide-label anim anim-1">Who We Are</div>
+  <div class="slide-title anim anim-2">Built for exactly<br><em>this</em> problem.</div>
+  <div class="divider"></div>
+  <div class="card anim anim-3" style="left:calc(46*var(--s));top:calc(200*var(--s));width:calc(386*var(--s));height:calc(330*var(--s))">
+    <div class="card-top-line"></div>
+    <div class="card-big" style="font-size:calc(72*var(--s));padding-top:calc(40*var(--s))">12</div>
+    <div class="card-small" style="font-size:calc(16*var(--s));padding-top:calc(14*var(--s))">years in sustainable<br>infrastructure</div>
+  </div>
+  <div class="card anim anim-4" style="left:calc(466*var(--s));top:calc(200*var(--s));width:calc(386*var(--s));height:calc(330*var(--s))">
+    <div class="card-top-line"></div>
+    <div class="card-big" style="font-size:calc(56*var(--s));padding-top:calc(40*var(--s))">€1.4B+</div>
+    <div class="card-small" style="font-size:calc(16*var(--s));padding-top:calc(14*var(--s))">in delivered projects<br>across Europe</div>
+  </div>
+  <div class="card anim anim-5" style="left:calc(886*var(--s));top:calc(200*var(--s));width:calc(386*var(--s));height:calc(330*var(--s))">
+    <div class="card-top-line"></div>
+    <div class="card-big" style="font-size:calc(34*var(--s));padding-top:calc(60*var(--s))">ISO 50001</div>
+    <div class="card-small" style="font-size:calc(16*var(--s));padding-top:calc(14*var(--s))">certified · EU<br>Taxonomy aligned</div>
+  </div>
+  <div class="anim anim-6" style="position:absolute;bottom:calc(52*var(--s));left:calc(46*var(--s));right:calc(46*var(--s));font-size:calc(15*var(--s));color:var(--grey2);font-weight:300;font-style:italic;text-align:center;">
+    The two people in front of you led every one of those projects from brief to handover.
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2b — Previous Clients ════════════════════════ -->
+<div class="slide" id="s2b">
+  <div class="slide-bg"></div><div class="accent-bar"></div>
+  <div class="slide-label anim anim-1">Track Record</div>
+  <div class="slide-title anim anim-2">Clients who trusted us<br>to build it right.</div>
+  <div class="divider"></div>
+
+  <!-- Urban Flow Mobility -->
+  <div class="client-card anim anim-3" style="left:calc(46*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));flex-direction:column;align-items:center;gap:calc(10*var(--s));padding:calc(22*var(--s)) calc(16*var(--s))">
+    <img src="urban-flow-logo.png" alt="Urban Flow Mobility" style="width:calc(72*var(--s));height:calc(72*var(--s));border-radius:calc(10*var(--s));object-fit:contain;background:#fff;padding:calc(3*var(--s));flex-shrink:0">
+    <div style="text-align:center">
+      <div class="client-name" style="font-size:calc(15*var(--s))">Urban Flow Mobility</div>
+      <div class="client-desc" style="font-size:calc(12*var(--s))">Edge compute · 8 sites · Berlin &amp; Hamburg</div>
+    </div>
+    <!-- press clipping -->
+    <img src="urban-flow.png" alt="Urban Flow press coverage" style="width:100%;height:calc(240*var(--s));object-fit:cover;object-position:top;border-radius:calc(6*var(--s));margin-top:calc(4*var(--s));opacity:0.9;">
+  </div>
+
+  <!-- Nordic Banks AG -->
+  <div class="client-card anim anim-4" style="left:calc(466*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));flex-direction:column;align-items:center;gap:calc(10*var(--s));padding:calc(22*var(--s)) calc(16*var(--s))">
+    <svg width="72" height="72" viewBox="0 0 80 80" style="width:calc(72*var(--s));height:calc(72*var(--s));flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+      <rect width="80" height="80" rx="12" fill="#1a3a6b"/>
+      <rect x="15" y="34" width="7" height="24" rx="1" fill="#4a7bc4"/>
+      <rect x="26" y="27" width="7" height="31" rx="1" fill="#6b9fd4"/>
+      <rect x="37" y="22" width="7" height="36" rx="1" fill="#4a7bc4"/>
+      <rect x="48" y="29" width="7" height="29" rx="1" fill="#6b9fd4"/>
+      <rect x="10" y="18" width="54" height="5" rx="2" fill="#8bb8e8"/>
+      <rect x="8" y="58" width="58" height="4" rx="2" fill="#8bb8e8"/>
+      <text x="40" y="73" text-anchor="middle" fill="#8bb8e8" font-size="6" font-family="sans-serif" font-weight="700" letter-spacing="1">NORDIC BANKS</text>
+    </svg>
+    <div style="text-align:center">
+      <div class="client-name" style="font-size:calc(15*var(--s))">Nordic Banks AG</div>
+      <div class="client-desc" style="font-size:calc(12*var(--s))">Primary data centre · Tier III · Frankfurt</div>
+    </div>
+    <!-- press clipping -->
+    <img src="article-nordic.png" alt="Frankfurter Allgemeine — Nordic Banks" style="width:100%;height:calc(240*var(--s));object-fit:cover;object-position:top;border-radius:calc(6*var(--s));margin-top:calc(4*var(--s))">
+  </div>
+
+  <!-- EuroPharma Group -->
+  <div class="client-card anim anim-5" style="left:calc(886*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));flex-direction:column;align-items:center;gap:calc(10*var(--s));padding:calc(22*var(--s)) calc(16*var(--s))">
+    <svg width="72" height="72" viewBox="0 0 80 80" style="width:calc(72*var(--s));height:calc(72*var(--s));flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+      <rect width="80" height="80" rx="12" fill="#0f4c6b"/>
+      <rect x="34" y="14" width="12" height="44" rx="3" fill="#4bc4a0"/>
+      <rect x="14" y="34" width="52" height="12" rx="3" fill="#4bc4a0"/>
+      <circle cx="40" cy="40" r="7" fill="#0f4c6b"/>
+      <text x="40" y="72" text-anchor="middle" fill="#4bc4a0" font-size="6" font-family="sans-serif" font-weight="700" letter-spacing="1">EUROPHARMA</text>
+    </svg>
+    <div style="text-align:center">
+      <div class="client-name" style="font-size:calc(15*var(--s))">EuroPharma Group</div>
+      <div class="client-desc" style="font-size:calc(12*var(--s))">Hybrid cloud infrastructure · Brussels</div>
+    </div>
+    <!-- press clipping -->
+    <img src="article-europharma.png" alt="Brussels Business Daily — EuroPharma" style="width:100%;height:calc(240*var(--s));object-fit:cover;object-position:top;border-radius:calc(6*var(--s));margin-top:calc(4*var(--s))">
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3 — Your Brief ════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="slide-bg"></div><div class="accent-bar"></div>
+  <div class="slide-label anim anim-1">Your Brief</div>
+  <div class="slide-title anim anim-2" style="font-size:calc(44*var(--s))">We heard you.<br>Here's what we commit to.</div>
+  <div class="divider"></div>
+  <div class="commit-card anim anim-3" style="left:calc(46*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));height:calc(430*var(--s))">
+    <div class="commit-card-left"></div>
+    <div class="commit-tag">Availability</div>
+    <div class="commit-title">Tier III<br>Data Centre</div>
+    <div class="commit-desc">99.982% uptime<br>N+1 redundancy on all critical systems<br>Zero single point of failure</div>
+  </div>
+  <div class="commit-card anim anim-4" style="left:calc(466*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));height:calc(430*var(--s))">
+    <div class="commit-card-left"></div>
+    <div class="commit-tag">Climate</div>
+    <div class="commit-title">Net-Zero<br>by Year 4</div>
+    <div class="commit-desc">Operational net-zero — not offsets<br>Measurable carbon milestones<br>EU Taxonomy compliant</div>
+  </div>
+  <div class="commit-card anim anim-5" style="left:calc(886*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));height:calc(430*var(--s))">
+    <div class="commit-card-left"></div>
+    <div class="commit-tag">Investment</div>
+    <div class="commit-title">€50M<br>4-Year Build</div>
+    <div class="commit-desc">On budget · On schedule<br>8% contingency built in<br>Full breakdown in your portal</div>
+  </div>
+  <div class="anim anim-6" style="position:absolute;bottom:calc(42*var(--s));left:0;right:0;text-align:center;font-size:calc(13*var(--s));color:var(--grey2);">Full brief with our specific responses is in your private portal</div>
+</div>
+
+<!-- ═══ SLIDE 4 — Technical Architecture ════════════════ -->
+<div class="slide" id="s4">
+  <div class="slide-bg"></div><div class="accent-bar"></div>
+  <div class="slide-label anim anim-1">Technical Architecture</div>
+  <div class="slide-title anim anim-2">The build.</div>
+  <div class="divider"></div>
+  <ul class="bullets anim anim-3" style="left:calc(46*var(--s));top:calc(210*var(--s));width:calc(530*var(--s))">
+    <li><strong>Modular design</strong> — scalable from day one</li>
+    <li><strong>Tier III redundancy</strong> — N+1 on all critical systems</li>
+    <li><strong>Liquid cooling core</strong> · Air-side economisation</li>
+    <li>Full site schematics in your portal</li>
+  </ul>
+  <div class="anim anim-4" style="position:absolute;right:calc(24*var(--s));top:calc(175*var(--s));width:calc(560*var(--s));height:calc(500*var(--s))">
+    <canvas id="chartPUE" style="width:100%;height:100%"></canvas>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 5 — Energy Mix ════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="slide-bg"></div><div class="accent-bar"></div>
+  <div class="slide-label anim anim-1">Energy Mix</div>
+  <div class="slide-title anim anim-2">Your energy —<br>100% renewable.</div>
+  <div class="divider"></div>
+  <div class="anim anim-3" style="position:absolute;left:calc(14*var(--s));top:calc(165*var(--s));width:calc(500*var(--s));height:calc(510*var(--s))">
+    <canvas id="chartDonut" style="width:100%;height:100%"></canvas>
+  </div>
+  <div class="e-row anim anim-3" style="top:calc(215*var(--s));left:calc(596*var(--s))">
+    <div class="e-dot" style="background:var(--light)"></div>
+    <div><div class="e-pct">60%</div><div class="e-label">On-site solar arrays</div></div>
+  </div>
+  <div class="e-row anim anim-4" style="top:calc(375*var(--s));left:calc(596*var(--s))">
+    <div class="e-dot" style="background:var(--gold)"></div>
+    <div><div class="e-pct">30%</div><div class="e-label">Wind PPA — locked 15 yrs</div></div>
+  </div>
+  <div class="e-row anim anim-5" style="top:calc(535*var(--s));left:calc(596*var(--s))">
+    <div class="e-dot" style="background:var(--mid)"></div>
+    <div><div class="e-pct">10%</div><div class="e-label">Certified green grid backup</div></div>
+  </div>
+  <div class="anim anim-6" style="position:absolute;bottom:calc(42*var(--s));left:calc(596*var(--s));right:calc(32*var(--s));font-size:calc(13*var(--s));font-weight:600;color:var(--light);">100% renewable from day one — contractual guarantee.</div>
+</div>
+
+<!-- ═══ SLIDE 6 — Sustainability ════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="slide-bg"></div><div class="accent-bar"></div>
+  <div class="slide-label anim anim-1">Sustainability</div>
+  <div class="slide-title anim anim-2">Not just compliant —<br>leading.</div>
+  <div class="divider"></div>
+  <div class="anim anim-3" style="position:absolute;left:calc(14*var(--s));top:calc(178*var(--s));width:calc(720*var(--s));height:calc(500*var(--s))">
+    <canvas id="chartCarbon" style="width:100%;height:100%"></canvas>
+  </div>
+  <ul class="bullets anim anim-4" style="right:calc(24*var(--s));top:calc(220*var(--s));width:calc(450*var(--s))">
+    <li><strong>EU Taxonomy · CSRD · EN 50600</strong></li>
+    <li>Net-zero Year 4 — <strong>operational</strong>, not offset</li>
+    <li>Circular hardware lifecycle</li>
+    <li><strong>30%</strong> less embodied carbon</li>
+  </ul>
+</div>
+
+<!-- ═══ SLIDE 7 — Risk Register ════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="slide-bg"></div><div class="accent-bar"></div>
+  <div class="slide-label anim anim-1">Risk Register</div>
+  <div class="slide-title anim anim-2">Four risks.<br>All managed.</div>
+  <div class="divider"></div>
+  <div class="anim anim-3" style="position:absolute;left:calc(28*var(--s));top:calc(192*var(--s));width:calc(690*var(--s))">
+    <table class="risk">
+      <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td>Supply chain delay</td><td><span class="badge badge-medium">Medium</span></td><td><span class="badge badge-high">High</span></td><td>Pre-ordered all long-lead items</td></tr>
+        <tr><td>Energy price spike</td><td><span class="badge badge-low">Low</span></td><td><span class="badge badge-medium">Medium</span></td><td>15-yr wind PPA locked</td></tr>
+        <tr><td>Regulatory change</td><td><span class="badge badge-low">Low</span></td><td><span class="badge badge-high">High</span></td><td>EU-aligned from day one</td></tr>
+        <tr><td>Construction overrun</td><td><span class="badge badge-medium">Medium</span></td><td><span class="badge badge-high">High</span></td><td>8% contingency built in</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="anim anim-4" style="position:absolute;right:calc(14*var(--s));top:calc(175*var(--s));width:calc(505*var(--s));height:calc(500*var(--s))">
+    <canvas id="chartRisk" style="width:100%;height:100%"></canvas>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8 — Financial Overview ═══════════════════ -->
+<div class="slide" id="s8">
+  <div class="slide-bg"></div><div class="accent-bar"></div>
+  <div class="slide-label anim anim-1">Financial Overview</div>
+  <div class="slide-title anim anim-2">€50M.<br>Fully allocated.</div>
+  <div class="divider"></div>
+  <div class="anim anim-3" style="position:absolute;left:calc(14*var(--s));top:calc(178*var(--s));width:calc(760*var(--s));height:calc(500*var(--s))">
+    <canvas id="chartFinance" style="width:100%;height:100%"></canvas>
+  </div>
+  <div class="kpi anim anim-3" style="right:calc(24*var(--s));top:calc(195*var(--s));width:calc(418*var(--s));height:calc(130*var(--s))">
+    <div class="kpi-bar" style="background:var(--light)"></div>
+    <div class="kpi-inner"><div class="kpi-big" style="color:var(--light)">€50M</div><div class="kpi-label">Total investment</div></div>
+  </div>
+  <div class="kpi anim anim-4" style="right:calc(24*var(--s));top:calc(350*var(--s));width:calc(418*var(--s));height:calc(130*var(--s))">
+    <div class="kpi-bar" style="background:var(--gold)"></div>
+    <div class="kpi-inner"><div class="kpi-big" style="color:var(--gold)">Year 6</div><div class="kpi-label">Breakeven</div></div>
+  </div>
+  <div class="kpi anim anim-5" style="right:calc(24*var(--s));top:calc(505*var(--s));width:calc(418*var(--s));height:calc(130*var(--s))">
+    <div class="kpi-bar" style="background:var(--light)"></div>
+    <div class="kpi-inner"><div class="kpi-big" style="color:var(--light)">12%</div><div class="kpi-label">Internal Rate of Return</div></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9 — Roadmap ════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="slide-bg"></div><div class="accent-bar"></div>
+  <div class="slide-label anim anim-1">Roadmap</div>
+  <div class="slide-title anim anim-2">4 years. 5 phases.</div>
+  <div class="divider"></div>
+  <div class="anim anim-3" style="position:absolute;left:calc(20*var(--s));right:calc(20*var(--s));top:calc(185*var(--s));height:calc(500*var(--s))">
+    <canvas id="chartGantt" style="width:100%;height:100%"></canvas>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10 — Next Steps ════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="slide-bg"></div><div class="accent-bar"></div>
+  <div class="slide-label anim anim-1">Next Steps</div>
+  <div class="slide-title anim anim-2">Three steps to begin.</div>
+  <div class="divider"></div>
+  <div class="card anim anim-3" style="left:calc(46*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));height:calc(400*var(--s))">
+    <div class="card-top-line"></div>
+    <div class="step-num" style="font-size:calc(64*var(--s));padding-top:calc(40*var(--s))">01</div>
+    <div class="step-title" style="font-size:calc(24*var(--s))">Sign Letter<br>of Intent</div>
+    <div class="step-when" style="font-size:calc(16*var(--s))">Week 1</div>
+  </div>
+  <div class="card anim anim-4" style="left:calc(466*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));height:calc(400*var(--s))">
+    <div class="card-top-line"></div>
+    <div class="step-num" style="font-size:calc(64*var(--s));padding-top:calc(40*var(--s))">02</div>
+    <div class="step-title" style="font-size:calc(24*var(--s))">Detailed design<br>delivered</div>
+    <div class="step-when" style="font-size:calc(16*var(--s))">Week 6</div>
+  </div>
+  <div class="card anim anim-5" style="left:calc(886*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));height:calc(400*var(--s))">
+    <div class="card-top-line"></div>
+    <div class="step-num" style="font-size:calc(64*var(--s));padding-top:calc(40*var(--s))">03</div>
+    <div class="step-title" style="font-size:calc(24*var(--s))">Kick-off<br>meeting</div>
+    <div class="step-when" style="font-size:calc(16*var(--s))">Week 8</div>
+  </div>
+  <div class="cta-bar anim anim-6" style="bottom:calc(38*var(--s));height:calc(62*var(--s))">
+    <div class="cta-dot"></div>
+    Your portal is live — login details on the card in front of you.
+    <div class="cta-dot"></div>
+  </div>
+</div>
+
+<!-- persistent brand mark — sits above all slides -->
+<div id="brand-mark">
+  <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="4,28 18,22 14,34" fill="#4ade80" opacity="0.85"/>
+    <polygon points="10,28 18,22 14,34" fill="#16a34a" opacity="0.5"/>
+    <polygon points="44,24 30,20 34,32" fill="#4ade80" opacity="0.85"/>
+    <polygon points="38,25 30,20 34,32" fill="#16a34a" opacity="0.5"/>
+    <polygon points="18,22 24,18 30,20 24,28" fill="#6FCF97"/>
+    <polygon points="18,22 24,28 14,34" fill="#2E7D5A"/>
+    <polygon points="30,20 24,28 34,32" fill="#38a169"/>
+    <polygon points="24,18 27,12 30,14 28,20 24,18" fill="#6FCF97"/>
+    <polygon points="27,12 30,8 33,12 30,14" fill="#86efac"/>
+    <polygon points="33,12 36,10 34,14" fill="#6FCF97"/>
+    <polygon points="14,34 24,28 22,38" fill="#2E7D5A"/>
+    <polygon points="14,34 18,38 22,38 24,28" fill="#38a169" opacity="0.7"/>
+  </svg>
+  <span id="brand-name">Crane</span>
+</div>
+
+</div></div><!-- /deck /stage -->
+
+<div id="dots"></div>
+<div id="nav">
+  <button id="prev">&#8592;</button>
+  <div id="counter">1 / 12</div>
+  <button id="next">&#8594;</button>
+</div>
+<div id="notes-panel">
+  <div id="notes-label">Speaker Notes</div>
+  <div id="notes-text"></div>
+  <div id="notes-hint">Press S to toggle</div>
+</div>
+
+<script>
+// ── Speaker notes ────────────────────────────────────────
+const NOTES = [
+  "This project was commissioned by Birdy Capital as a €50 million investment in sustainable data centre infrastructure. Crane Data Solutions was selected as the lead partner — combining engineering precision with a net-zero commitment from day one.",
+  "Good morning, Ms. Birdy. Thank you for commissioning us. Today we'll show you exactly how Crane will deliver your €50 million sustainable data centre — on time, on budget, and ahead of EU compliance requirements.",
+  "Crane was founded to solve exactly the problem you face: high-performance data infrastructure without sacrificing environmental responsibility. Over €1.4 billion in projects delivered across Europe, all ISO 50001 certified and EU Taxonomy aligned. You're not getting a sales team — you're getting the people who will actually build this.",
+  "Three clients who trusted us with exactly this kind of commitment. Urban Flow Mobility — eight edge compute sites across Berlin and Hamburg, delivered on time. Nordic Banks AG — a full Tier III primary data centre in Frankfurt. EuroPharma Group — hybrid cloud infrastructure in Brussels. Each one a reference you can call.",
+  "Before we show you our solution, we want to show you that we listened. Tier III facility — 99.982% uptime, fully redundant. Genuine net-zero trajectory, not greenwashing. Delivery within four years and within budget. Every decision anchored to those three commitments.",
+  "The architecture is modular — scales with your business without a rebuild. Tier III redundancy across power, cooling, and connectivity. Liquid cooling core for high-density racks, air-side economisation for the perimeter. PUE of 1.2 versus industry average 1.6 — that's 25% less energy wasted.",
+  "Where the power comes from: 60% on-site solar — energy you own and control. 30% from a wind PPA locked in for 15 years. 10% certified green grid backup. From day one, 100% renewable — contractual guarantee, not aspiration.",
+  "Sustainability is a design input, not a checkbox. EU Taxonomy, CSRD, EN 50600 — all three frameworks shaped every structural decision. Net-zero by end of Year 4 — operational, not offset. Circular hardware lifecycle reduces embodied carbon by 30%.",
+  "Every project carries risk. Supply chain delay — long-lead items already pre-ordered. Energy price volatility — neutralised by the 15-year PPA. Regulatory change — we built to EU Taxonomy from day one. Construction overrun — 8% contingency baked in.",
+  "€50 million — every euro accounted for. €18M civil works, €12M renewable energy systems, €10M IT hardware, €6M cooling, €4M project management and compliance. Breakeven Year 6, IRR 12%. Full model with sensitivity analysis in your portal.",
+  "Four phases, four years. Year 1: planning, permits, and early groundwork — civil works begin once initial approvals are secured. Year 2: structure and energy systems. Year 3: IT fit-out, integration, testing. Year 4: go-live, certifications, net-zero milestone. Formal decision point at each phase — you sign off before we move forward.",
+  "We're ready to move. Letter of Intent to proceed to detailed design. Six weeks later, the full technical and financial design package. Week eight, kick-off meeting. Ms. Birdy — your portal is live right now. Login details on the card in front of you."
+];
+
+// ── Scale ────────────────────────────────────────────────
+function updateScale() {
+  const deck = document.getElementById('deck');
+  const s = deck.offsetWidth / 1333;
+  document.querySelectorAll('.slide').forEach(sl => sl.style.setProperty('--s', s + 'px'));
+  document.getElementById('brand-mark').style.setProperty('--s', s + 'px');
+}
+updateScale();
+window.addEventListener('resize', () => { updateScale(); rebuildCharts(); });
+
+// ── Navigation ───────────────────────────────────────────
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total  = slides.length;
+let current  = 0, notesOpen = false;
+
+const counter  = document.getElementById('counter');
+const prevBtn  = document.getElementById('prev');
+const nextBtn  = document.getElementById('next');
+const dotsEl   = document.getElementById('dots');
+const progress = document.getElementById('progress-bar');
+const notesPan = document.getElementById('notes-panel');
+const notesText= document.getElementById('notes-text');
+const hintsEl  = document.getElementById('hints');
+
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsEl.appendChild(d);
+});
+
+function goTo(n) {
+  if (n === current) return;
+  slides[current].classList.remove('active');
+  dotsEl.children[current].classList.remove('active');
+  current = Math.max(0, Math.min(total - 1, n));
+  slides[current].classList.add('active');
+  dotsEl.children[current].classList.add('active');
+  counter.textContent = `${current + 1} / ${total}`;
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === total - 1;
+  progress.style.width = `${((current + 1) / total) * 100}%`;
+  notesText.textContent = NOTES[current] || '';
+  initChartsForSlide(slides[current].id);
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); goTo(current - 1); }
+  if (e.key === 's' || e.key === 'S') { notesOpen = !notesOpen; notesPan.classList.toggle('visible', notesOpen); }
+  if (e.key === 'f' || e.key === 'F') document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.();
+  if (e.key === 'Escape' && notesOpen) { notesOpen = false; notesPan.classList.remove('visible'); }
+});
+
+setTimeout(() => hintsEl.classList.add('visible'), 600);
+setTimeout(() => hintsEl.classList.remove('visible'), 4500);
+let hintTimer;
+document.addEventListener('mousemove', () => { hintsEl.classList.add('visible'); clearTimeout(hintTimer); hintTimer = setTimeout(() => hintsEl.classList.remove('visible'), 3000); });
+
+let navTimer;
+const nav = document.getElementById('nav');
+function resetNavTimer() { nav.classList.remove('hidden'); clearTimeout(navTimer); navTimer = setTimeout(() => nav.classList.add('hidden'), 4000); }
+document.addEventListener('mousemove', resetNavTimer);
+resetNavTimer();
+
+prevBtn.disabled = true;
+progress.style.width = `${(1/total)*100}%`;
+notesText.textContent = NOTES[0];
+
+// ── Chart.js theme ───────────────────────────────────────
+const C = { bg:'#0E1F16', bg2:'#132A1C', mid:'#2E7D5A', light:'#6FCF97', gold:'#F2C94E', white:'#F0F5F2', grey:'#B8CEC4', grey2:'#6B8C7C' };
+
+Chart.defaults.color = C.grey2;
+Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+Chart.defaults.font.size   = 12;
+
+const chartInstances = {};
+
+function destroyChart(id) {
+  if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; }
+}
+
+function rebuildCharts() {
+  Object.keys(chartInstances).forEach(id => destroyChart(id));
+  initChartsForSlide(slides[current].id);
+}
+
+function initChartsForSlide(slideId) {
+  if (slideId === 's4' && !chartInstances['chartPUE'])     buildPUE();
+  if (slideId === 's5' && !chartInstances['chartDonut'])   buildDonut();
+  if (slideId === 's6' && !chartInstances['chartCarbon'])  buildCarbon();
+  if (slideId === 's7' && !chartInstances['chartRisk'])    buildRisk();
+  if (slideId === 's8' && !chartInstances['chartFinance']) buildFinance();
+  if (slideId === 's9' && !chartInstances['chartGantt'])   buildGantt();
+}
+initChartsForSlide('s1');
+
+// ── PUE Bar Chart ────────────────────────────────────────
+function buildPUE() {
+  const ctx = document.getElementById('chartPUE');
+  chartInstances['chartPUE'] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Industry Average', 'Crane'],
+      datasets: [{
+        data: [1.6, 1.2],
+        backgroundColor: ['rgba(229,115,115,0.5)', C.light + 'CC'],
+        borderColor:     ['#E57373', C.light],
+        borderWidth: 2,
+        borderRadius: 6,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 900, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true, text: 'Power Usage Effectiveness (PUE)',
+          color: C.white, font: { size: 15, weight: '700' }, padding: { bottom: 16 }
+        },
+        tooltip: {
+          callbacks: { label: ctx => ` PUE: ${ctx.parsed.y.toFixed(1)}` }
+        }
+      },
+      scales: {
+        y: {
+          min: 0, max: 2,
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: C.grey2, stepSize: 0.5 },
+          border: { color: 'transparent' }
+        },
+        x: {
+          grid: { display: false },
+          ticks: {
+            color: (ctx) => ctx.index === 1 ? C.light : C.grey2,
+            font: (ctx) => ({ weight: ctx.index === 1 ? '700' : '400' })
+          },
+          border: { color: C.mid }
+        }
+      }
+    },
+    plugins: [{
+      id: 'pueLabel',
+      afterDatasetsDraw(chart) {
+        const { ctx, data } = chart;
+        chart.getDatasetMeta(0).data.forEach((bar, i) => {
+          const val = data.datasets[0].data[i];
+          ctx.fillStyle = i === 1 ? C.light : '#E57373';
+          ctx.font = `700 22px Fraunces, serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          ctx.fillText(val.toFixed(1), bar.x, bar.y - 8);
+        });
+        // badge
+        const b = chart.getDatasetMeta(0).data[1];
+        const bx = chart.chartArea.left + (chart.chartArea.right - chart.chartArea.left) / 2;
+        const by = chart.chartArea.bottom + 52;
+        const label = '25% less energy wasted';
+        ctx.font = `600 12px Plus Jakarta Sans, sans-serif`;
+        const tw = ctx.measureText(label).width;
+        const pad = 16, bh = 26;
+        ctx.fillStyle = C.mid + '44';
+        ctx.strokeStyle = C.mid;
+        ctx.lineWidth = 1;
+        const rx = bx - tw/2 - pad, ry = by - bh/2;
+        ctx.beginPath();
+        ctx.roundRect(rx, ry, tw + pad*2, bh, 13);
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle = C.light;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(label, bx, by);
+      }
+    }]
+  });
+}
+
+// ── Donut Chart ──────────────────────────────────────────
+function buildDonut() {
+  const ctx = document.getElementById('chartDonut');
+  chartInstances['chartDonut'] = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['On-site Solar (60%)', 'Wind PPA (30%)', 'Green Grid (10%)'],
+      datasets: [{
+        data: [60, 30, 10],
+        backgroundColor: [C.light + 'DD', C.gold + 'DD', C.mid + 'DD'],
+        borderColor:     [C.light, C.gold, C.mid],
+        borderWidth: 2,
+        hoverOffset: 8,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '62%',
+      animation: { animateRotate: true, duration: 1000, easing: 'easeOutQuart' },
+      plugins: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: true, text: 'Energy Mix — 100% Renewable',
+          color: C.white, font: { size: 15, weight: '700' }, padding: { bottom: 14 }
+        },
+        tooltip: {
+          callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}%` }
+        }
+      }
+    },
+    plugins: [{
+      id: 'donutCenter',
+      afterDraw(chart) {
+        const { ctx, chartArea: { left, right, top, bottom } } = chart;
+        const cx = (left + right) / 2, cy = (top + bottom) / 2;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = C.light;
+        ctx.font = `700 28px Fraunces, serif`;
+        ctx.fillText('100%', cx, cy - 10);
+        ctx.fillStyle = C.grey2;
+        ctx.font = `400 12px Plus Jakarta Sans, sans-serif`;
+        ctx.fillText('renewable', cx, cy + 14);
+      }
+    }]
+  });
+}
+
+// ── Carbon Line Chart ────────────────────────────────────
+function buildCarbon() {
+  const ctx = document.getElementById('chartCarbon');
+  chartInstances['chartCarbon'] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Start', 'Year 1', 'Year 2', 'Year 3', 'Year 4'],
+      datasets: [{
+        label: 'Carbon Index',
+        data: [100, 75, 50, 25, 0],
+        borderColor: C.light,
+        borderWidth: 3,
+        pointBackgroundColor: [C.gold, C.gold, C.gold, C.gold, C.light],
+        pointBorderColor: C.bg,
+        pointBorderWidth: 2,
+        pointRadius: [5,5,5,5,9],
+        pointHoverRadius: 10,
+        fill: true,
+        backgroundColor: (ctx) => {
+          const gradient = ctx.chart.ctx.createLinearGradient(0, 0, 0, ctx.chart.chartArea?.bottom || 300);
+          gradient.addColorStop(0, C.light + '44');
+          gradient.addColorStop(1, C.light + '05');
+          return gradient;
+        },
+        tension: 0.35,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 1000, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true, text: 'Carbon Trajectory — Road to Net-Zero',
+          color: C.white, font: { size: 15, weight: '700' }, padding: { bottom: 14 }
+        },
+        tooltip: { callbacks: { label: ctx => ` Carbon Index: ${ctx.parsed.y}%` } }
+      },
+      scales: {
+        y: {
+          min: -10, max: 110,
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: C.grey2, callback: v => v + '%' },
+          border: { color: 'transparent' }
+        },
+        x: {
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          ticks: {
+            color: (ctx) => ctx.index === 4 ? C.light : C.grey2,
+            font: (ctx) => ({ weight: ctx.index === 4 ? '700' : '400' })
+          },
+          border: { color: C.mid }
+        }
+      }
+    },
+    plugins: [{
+      id: 'netZeroLabel',
+      afterDraw(chart) {
+        const { ctx, scales: { x, y } } = chart;
+        const px = x.getPixelForValue(4), py = y.getPixelForValue(0);
+        ctx.fillStyle = C.light;
+        ctx.font = `700 11px Plus Jakarta Sans, sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+        ctx.fillText('NET-ZERO ✓', px, py - 14);
+        // zero line
+        ctx.beginPath();
+        ctx.moveTo(chart.chartArea.left, py);
+        ctx.lineTo(chart.chartArea.right, py);
+        ctx.strokeStyle = C.mid + '66';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([5, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }]
+  });
+}
+
+// ── Risk Matrix ───────────────────────────────────────────
+function buildRisk() {
+  const ctx = document.getElementById('chartRisk');
+
+  // Zone background plugin — draws colour-coded 3×3 grid cells before data
+  const zonePlugin = {
+    id: 'riskZones',
+    beforeDatasetsDraw(chart) {
+      const { ctx: c, chartArea, scales: { x, y } } = chart;
+      // 3×3 zone colours (col = likelihood 1-3, row = impact 1-3, low→high)
+      const zones = [
+        // [xMin, xMax, yMin, yMax, colour]
+        [0.5,1.5, 0.5,1.5, 'rgba(111,207,151,0.12)'],  // Low/Low
+        [1.5,2.5, 0.5,1.5, 'rgba(242,201,78,0.10)'],   // Med/Low
+        [2.5,3.5, 0.5,1.5, 'rgba(242,201,78,0.14)'],   // High/Low
+        [0.5,1.5, 1.5,2.5, 'rgba(111,207,151,0.10)'],  // Low/Med
+        [1.5,2.5, 1.5,2.5, 'rgba(242,201,78,0.14)'],   // Med/Med
+        [2.5,3.5, 1.5,2.5, 'rgba(229,115,115,0.14)'],  // High/Med
+        [0.5,1.5, 2.5,3.5, 'rgba(242,201,78,0.12)'],   // Low/High
+        [1.5,2.5, 2.5,3.5, 'rgba(229,115,115,0.16)'],  // Med/High
+        [2.5,3.5, 2.5,3.5, 'rgba(229,115,115,0.24)'],  // High/High
+      ];
+      zones.forEach(([x0,x1,y0,y1,col]) => {
+        const px0 = x.getPixelForValue(x0), px1 = x.getPixelForValue(x1);
+        const py0 = y.getPixelForValue(y1), py1 = y.getPixelForValue(y0); // y inverted
+        c.fillStyle = col;
+        c.fillRect(px0, py0, px1-px0, py1-py0);
+      });
+      // thin grid dividers between cells
+      c.strokeStyle = 'rgba(255,255,255,0.07)';
+      c.lineWidth = 1;
+      [1.5, 2.5].forEach(v => {
+        c.beginPath();
+        c.moveTo(x.getPixelForValue(v), chartArea.top);
+        c.lineTo(x.getPixelForValue(v), chartArea.bottom);
+        c.stroke();
+        c.beginPath();
+        c.moveTo(chartArea.left,  y.getPixelForValue(v));
+        c.lineTo(chartArea.right, y.getPixelForValue(v));
+        c.stroke();
+      });
+    }
+  };
+
+  // Label plugin — draws name + arrow pointing to dot
+  const labelPlugin = {
+    id: 'riskLabels',
+    afterDatasetsDraw(chart) {
+      const { ctx: c } = chart;
+      const allData = [
+        { x:1.0, y:2.0, name:'Energy price spike',   color: C.light, anchor:'right' },
+        { x:1.0, y:3.0, name:'Regulatory change',    color: C.light, anchor:'right' },
+        { x:1.8, y:3.1, name:'Supply chain delay',   color: C.gold,  anchor:'left'  },
+        { x:2.2, y:2.9, name:'Construction overrun', color: C.gold,  anchor:'left'  },
+      ];
+      const { scales: { x, y } } = chart;
+      c.save();
+      allData.forEach(({ x: xv, y: yv, name, color, anchor }) => {
+        const px = x.getPixelForValue(xv);
+        const py = y.getPixelForValue(yv);
+        const offset = anchor === 'right' ? -14 : 14;
+        const align  = anchor === 'right' ? 'right' : 'left';
+
+        c.font = `600 11px Plus Jakarta Sans, sans-serif`;
+        const tw = c.measureText(name).width;
+        const pad = 8, bh = 22;
+        const bx = anchor === 'right' ? px + offset - tw - pad : px + offset;
+        const by = py - bh / 2;
+
+        // pill background
+        c.fillStyle = color + '22';
+        c.strokeStyle = color + '88';
+        c.lineWidth = 1;
+        c.beginPath();
+        c.roundRect(bx - pad, by, tw + pad*2, bh, 11);
+        c.fill(); c.stroke();
+
+        // text
+        c.fillStyle = color;
+        c.textAlign = align;
+        c.textBaseline = 'middle';
+        c.fillText(name, anchor === 'right' ? px + offset - pad : px + offset + pad, py);
+      });
+      c.restore();
+    }
+  };
+
+  chartInstances['chartRisk'] = new Chart(ctx, {
+    type: 'bubble',
+    data: {
+      datasets: [
+        {
+          label: 'Low likelihood',
+          data: [
+            { x:1.0, y:2.0, r:14 },
+            { x:1.0, y:3.0, r:14 },
+          ],
+          backgroundColor: C.light + 'CC',
+          borderColor: C.light,
+          borderWidth: 2,
+          hoverBackgroundColor: C.light,
+        },
+        {
+          label: 'Medium likelihood',
+          data: [
+            { x:1.8, y:3.1, r:14 },
+            { x:2.2, y:2.9, r:14 },
+          ],
+          backgroundColor: C.gold + 'CC',
+          borderColor: C.gold,
+          borderWidth: 2,
+          hoverBackgroundColor: C.gold,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 700, easing: 'easeOutBack' },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top',
+          align: 'end',
+          labels: { color: C.grey, usePointStyle: true, pointStyleWidth: 10, font: { size: 11 } }
+        },
+        title: {
+          display: true, text: 'Risk Matrix',
+          color: C.white, font: { size: 15, weight: '700' }, padding: { bottom: 6 }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const names = [['Energy price spike','Regulatory change'],['Supply chain delay','Construction overrun']];
+              return ` ${names[ctx.datasetIndex][ctx.dataIndex]}`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          min: 0.5, max: 3.5,
+          title: { display: true, text: 'Likelihood →', color: C.grey2, font: { size: 12 } },
+          grid: { display: false },
+          ticks: { color: C.grey2, stepSize: 1, callback: v => ({1:'Low',2:'Medium',3:'High'}[v]||'') },
+          border: { color: C.mid }
+        },
+        y: {
+          min: 0.5, max: 3.5,
+          title: { display: true, text: 'Impact →', color: C.grey2, font: { size: 12 } },
+          grid: { display: false },
+          ticks: { color: C.grey2, stepSize: 1, callback: v => ({1:'Low',2:'Medium',3:'High'}[v]||'') },
+          border: { color: 'transparent' }
+        }
+      }
+    },
+    plugins: [zonePlugin, labelPlugin]
+  });
+}
+
+// ── Finance Horizontal Bar ───────────────────────────────
+function buildFinance() {
+  const ctx = document.getElementById('chartFinance');
+  const items = [
+    { label: 'Civil Works',       val: 18, color: C.light },
+    { label: 'Renewable Energy',  val: 12, color: C.gold  },
+    { label: 'IT Hardware',       val: 10, color: C.light },
+    { label: 'Cooling',           val:  6, color: C.mid   },
+    { label: 'PM & Compliance',   val:  4, color: C.mid   },
+  ];
+  chartInstances['chartFinance'] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: items.map(i => i.label),
+      datasets: [{
+        data: items.map(i => i.val),
+        backgroundColor: items.map(i => i.color + 'CC'),
+        borderColor:     items.map(i => i.color),
+        borderWidth: 2,
+        borderRadius: 5,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 900, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true, text: 'Budget Breakdown — €50M Total',
+          color: C.white, font: { size: 15, weight: '700' }, padding: { bottom: 14 }
+        },
+        tooltip: { callbacks: { label: ctx => ` €${ctx.parsed.x}M (${Math.round(ctx.parsed.x/50*100)}%)` } }
+      },
+      scales: {
+        x: {
+          max: 22,
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: C.grey2, callback: v => '€' + v + 'M' },
+          border: { color: C.mid }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { color: C.grey },
+          border: { color: 'transparent' }
+        }
+      }
+    },
+    plugins: [{
+      id: 'financeValues',
+      afterDatasetsDraw(chart) {
+        const { ctx } = chart;
+        chart.getDatasetMeta(0).data.forEach((bar, i) => {
+          const val = chart.data.datasets[0].data[i];
+          ctx.fillStyle = C.white;
+          ctx.font = `600 12px Plus Jakarta Sans, sans-serif`;
+          ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+          ctx.fillText(`€${val}M`, bar.x + 8, bar.y);
+        });
+      }
+    }]
+  });
+}
+
+// ── Gantt (horizontal bars by phase) ────────────────────
+function buildGantt() {
+  const ctx = document.getElementById('chartGantt');
+  const phases = [
+    { label: 'Planning & Permits',     start: 0,   end: 1,    color: C.mid   },
+    { label: 'Civil Works',            start: 0.5, end: 2,    color: C.light },
+    { label: 'Energy Systems',         start: 1.5, end: 3,    color: C.gold  },
+    { label: 'IT Fit-out & Testing',   start: 2.5, end: 3.75, color: C.mid   },
+    { label: 'Go-live & Certification',start: 3.5, end: 4,    color: C.gold  },
+  ];
+
+  chartInstances['chartGantt'] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: phases.map(p => p.label),
+      datasets: [
+        {
+          label: 'offset',
+          data: phases.map(p => p.start),
+          backgroundColor: 'transparent',
+          borderColor: 'transparent',
+          borderSkipped: false,
+        },
+        {
+          label: 'duration',
+          data: phases.map(p => p.end - p.start),
+          backgroundColor: phases.map(p => p.color + 'CC'),
+          borderColor:     phases.map(p => p.color),
+          borderWidth: 2,
+          borderRadius: 5,
+          borderSkipped: false,
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 1000, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true, text: '4-Year Delivery Roadmap — 5 Phases',
+          color: C.white, font: { size: 15, weight: '700' }, padding: { bottom: 14 }
+        },
+        tooltip: {
+          filter: item => item.datasetIndex === 1,
+          callbacks: {
+            label: ctx => {
+              const p = phases[ctx.dataIndex];
+              return ` Year ${p.start} – Year ${p.end}`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          min: 0, max: 4,
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: C.grey2, stepSize: 1, callback: v => v === 0 ? 'Start' : 'Year ' + v },
+          border: { color: C.mid }
+        },
+        y: {
+          stacked: true,
+          grid: { display: false },
+          ticks: { color: C.grey },
+          border: { color: 'transparent' }
+        }
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>
