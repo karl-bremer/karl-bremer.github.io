@@ -206,6 +206,82 @@ footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border);
 .stat-tile-label { font-size: .78rem; color: rgba(255,255,255,.65); margin-top: .6rem; line-height: 1.4; }
 .stat-tile-delta { display: inline-block; font-size: .72rem; font-weight: 700; color: #86efac; background: rgba(134,239,172,.15); border-radius: 4px; padding: .15rem .5rem; margin-bottom: .5rem; }
 
+/* PUE CARD ─────────────────────────────────────────────────── */
+.pue-card {
+  margin-top: 3rem;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: clamp(1.2rem, 3vw, 2rem) clamp(1rem, 3vw, 1.8rem) clamp(1.4rem, 3vw, 1.8rem);
+}
+.pue-card-head { text-align: center; margin-bottom: 1.2rem; }
+.pue-card-head h3 { color: #fff; font-size: clamp(.95rem, 2.4vw, 1.1rem); margin: 0 0 .35rem; font-weight: 700; }
+.pue-card-head p  { color: rgba(255,255,255,.55); font-size: clamp(.72rem, 2vw, .82rem); margin: 0; }
+
+/* Comparison strip — sits below the gauge */
+.pue-compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(.5rem, 2vw, 1.2rem);
+  max-width: 520px;
+  margin: 1.2rem auto 0;
+}
+.pue-chip {
+  display: flex; align-items: center; gap: .6rem;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: .7rem .9rem;
+}
+.pue-chip-crane    { border-color: rgba(255,255,255,.35); }
+.pue-chip-industry {
+  border-color: rgba(248,113,113,.35);
+  flex-direction: row-reverse;
+}
+.pue-chip-industry .pue-chip-body { text-align: right; }
+.pue-chip-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.pue-chip-crane    .pue-chip-dot { background: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.15); }
+.pue-chip-industry .pue-chip-dot { background: #fca5a5; box-shadow: 0 0 0 3px rgba(252,165,165,.15);
+  background-image: repeating-linear-gradient(45deg, transparent 0 2px, rgba(0,0,0,.25) 2px 4px); }
+.pue-chip-val { font-size: clamp(1.3rem, 5vw, 1.75rem); font-weight: 900; color: #fff; line-height: 1; letter-spacing: -.02em; }
+.pue-chip-lbl { font-size: clamp(.65rem, 1.8vw, .75rem); color: rgba(255,255,255,.6); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-top: .2rem; }
+.pue-delta {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(74,222,128,.22), rgba(74,222,128,.08));
+  border: 1px solid rgba(74,222,128,.4);
+  border-radius: 12px;
+  padding: .55rem .8rem;
+  min-width: 0;
+}
+.pue-delta-num { font-size: clamp(1.1rem, 4.5vw, 1.5rem); font-weight: 900; color: #86efac; line-height: 1; }
+.pue-delta-lbl { font-size: clamp(.6rem, 1.6vw, .68rem); color: rgba(255,255,255,.75); font-weight: 700; margin-top: .3rem; letter-spacing: .04em; text-transform: uppercase; }
+
+/* Legend */
+.pue-legend {
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: .5rem 1.2rem;
+  margin-top: 1.2rem;
+}
+.pue-legend-item { display: flex; align-items: center; gap: .4rem; font-size: clamp(.7rem, 1.8vw, .78rem); color: rgba(255,255,255,.7); font-weight: 600; }
+.pue-legend-sw { width: 14px; height: 6px; border-radius: 2px; flex-shrink: 0; }
+
+/* PUE mobile stacking — below ~440px the 3-column strip cramps too much */
+@media (max-width: 440px) {
+  .pue-compare {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "crane industry"
+      "delta delta";
+  }
+  .pue-chip-crane    { grid-area: crane; }
+  .pue-chip-industry { grid-area: industry; flex-direction: row; }
+  .pue-chip-industry .pue-chip-body { text-align: left; }
+  .pue-delta         { grid-area: delta; padding: .7rem 1rem; display: flex; align-items: center; justify-content: center; gap: .6rem; }
+  .pue-delta-num { line-height: 1; }
+  .pue-delta-lbl { margin-top: 0; }
+}
+
 /* FADE-IN */
 .fade { opacity: 0; transform: translateY(18px); transition: opacity .45s, transform .45s; }
 .fade.on { opacity: 1; transform: none; }

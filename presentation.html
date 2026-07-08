@@ -468,7 +468,7 @@ canvas { display: block; }
   <div class="divider"></div>
   <div class="card anim anim-3" style="left:calc(46*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));height:calc(332*var(--s))">
     <div class="card-top-line"></div>
-    <div class="card-big">12</div>
+    <div class="card-big">15</div>
     <div class="card-small">years in sustainable<br>infrastructure</div>
   </div>
   <div class="card anim anim-4" style="left:calc(466*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));height:calc(332*var(--s))">
@@ -497,7 +497,7 @@ canvas { display: block; }
     <div class="commit-card-left"></div>
     <div class="commit-tag">Availability</div>
     <div class="commit-title">Tier III<br>Data Centre</div>
-    <div class="commit-desc">99.982% uptime<br>N+1 redundancy on all critical systems<br>Zero single point of failure</div>
+    <div class="commit-desc">Concurrently maintainable<br>N+1 redundancy on all critical systems<br>Zero single point of failure</div>
   </div>
   <div class="commit-card anim anim-4" style="left:calc(466*var(--s));top:calc(195*var(--s));width:calc(386*var(--s));height:calc(365*var(--s))">
     <div class="commit-card-left"></div>
@@ -686,8 +686,8 @@ canvas { display: block; }
 const NOTES = [
   "Good morning, Ms. Birdy. Thank you for commissioning us. Today we'll show you exactly how Crane will deliver your €50 million sustainable data centre — on time, on budget, and ahead of EU compliance requirements.",
   "Crane was founded to solve exactly the problem you face: high-performance data infrastructure without sacrificing environmental responsibility. Over €200M in projects delivered across Europe, all ISO 50001 certified and EU Taxonomy aligned. You're not getting a sales team — you're getting the people who will actually build this.",
-  "Before we show you our solution, we want to show you that we listened. Tier III facility — 99.982% uptime, fully redundant. Genuine net-zero trajectory, not greenwashing. Delivery within four years and within budget. Every decision anchored to those three commitments.",
-  "The architecture is modular — scales with your business without a rebuild. Tier III redundancy across power, cooling, and connectivity. Liquid cooling core for high-density racks, air-side economisation for the perimeter. PUE of 1.2 versus industry average 1.6 — that's 25% less energy wasted.",
+  "Before we show you our solution, we want to show you that we listened. Tier III facility — concurrently maintainable, fully redundant. Genuine net-zero trajectory, not greenwashing. Delivery within four years and within budget. Every decision anchored to those three commitments.",
+  "The architecture is modular — scales with your business without a rebuild. Tier III redundancy across power, cooling, and connectivity. Liquid cooling core for high-density racks, air-side economisation for the perimeter. PUE of 1.15 versus industry average 1.58 — that's 26% less energy wasted.",
   "Where the power comes from: 60% on-site solar — energy you own and control. 30% from a wind PPA locked in for 15 years. 10% certified green grid backup. From day one, 100% renewable — contractual guarantee, not aspiration.",
   "Sustainability is a design input, not a checkbox. EU Taxonomy, CSRD, EN 50600 — all three frameworks shaped every structural decision. Net-zero by end of Year 4 — operational, not offset. Circular hardware lifecycle reduces embodied carbon by 30%.",
   "Every project carries risk. Supply chain delay — long-lead items already pre-ordered. Energy price volatility — neutralised by the 15-year PPA. Regulatory change — we built to EU Taxonomy from day one. Construction overrun — 8% contingency baked in.",
@@ -803,7 +803,7 @@ function buildPUE() {
     data: {
       labels: ['Industry Average', 'Crane'],
       datasets: [{
-        data: [1.6, 1.2],
+        data: [1.58, 1.15],
         backgroundColor: [C.mid + 'CC', C.gold + 'CC'],
         borderColor:     [C.mid, C.gold],
         borderWidth: 2,
@@ -821,7 +821,7 @@ function buildPUE() {
           color: C.white, font: { size: 15, weight: '700' }, padding: { bottom: 16 }
         },
         tooltip: {
-          callbacks: { label: ctx => ` PUE: ${ctx.parsed.y.toFixed(1)}` }
+          callbacks: { label: ctx => ` PUE: ${ctx.parsed.y.toFixed(2)}` }
         }
       },
       scales: {
@@ -851,13 +851,13 @@ function buildPUE() {
           ctx.font = `700 22px Fraunces, serif`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
-          ctx.fillText(val.toFixed(1), bar.x, bar.y - 8);
+          ctx.fillText(val.toFixed(2), bar.x, bar.y - 8);
         });
         // badge
         const b = chart.getDatasetMeta(0).data[1];
         const bx = chart.chartArea.left + (chart.chartArea.right - chart.chartArea.left) / 2;
         const by = chart.chartArea.bottom + 52;
-        const label = '25% less energy wasted';
+        const label = '26% less energy wasted';
         ctx.font = `600 12px Plus Jakarta Sans, sans-serif`;
         const tw = ctx.measureText(label).width;
         const pad = 16, bh = 26;

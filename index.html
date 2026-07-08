@@ -68,7 +68,7 @@
     <div>
       <div class="pill">Carbon-Neutral Builder · RE100 Certified</div>
       <h1>We build tomorrow's infrastructure,<br><span class="hl">sustainably.</span></h1>
-      <p class="hero-sub">Global data centre electricity demand is growing 30% per year — driven by AI. We build the infrastructure that scales with it, carbon-neutral from Day 1.</p>
+      <p class="hero-sub">Global data centre electricity demand is on track to roughly double by 2030 — around 15% per year, faster still for AI-specific capacity. We build the infrastructure that scales with it, carbon-neutral from Day 1.</p>
       <div class="cta-row">
         <a href="#live-stats" class="btn btn-primary">See Live Stats ↓</a>
         <a href="portal.html" class="btn btn-outline">🔒 Client Portal</a>
@@ -104,10 +104,13 @@
       <div class="stat-tile"><div class="stat-tile-delta">↑ reused</div><div class="stat-tile-num"><span id="stat-hw">87.1</span><span class="stat-tile-unit">k</span></div><div class="stat-tile-label">Hardware assets reused</div><svg class="stat-sparkline" id="spark-hw"></svg></div>
       <div class="stat-tile"><div class="stat-tile-delta">↑ growing</div><div class="stat-tile-num"><span id="stat-servers">18,400</span></div><div class="stat-tile-label">Servers under management</div><svg class="stat-sparkline" id="spark-servers"></svg></div>
     </div>
-    <div style="margin-top:3rem;background:rgba(255,255,255,.08);border-radius:16px;padding:2rem 1.5rem 1.8rem;">
-      <h3 style="color:#fff;margin-bottom:.3rem;font-size:1rem;">📊 PUE Efficiency — Crane vs EU Average</h3>
-      <p style="color:rgba(255,255,255,.5);font-size:.78rem;margin-bottom:1.4rem;">Lower is better — less energy wasted per unit of IT load</p>
-      <svg id="pue-gauge" viewBox="0 0 600 310" style="width:100%;max-width:580px;display:block;margin:0 auto;" aria-label="PUE gauge: Crane 1.15 vs EU average 1.58">
+    <div class="pue-card">
+      <div class="pue-card-head">
+        <h3>📊 PUE Efficiency — Crane vs Industry Average</h3>
+        <p>Lower is better — less energy wasted per unit of IT load</p>
+      </div>
+
+      <svg id="pue-gauge" viewBox="0 0 600 340" style="width:100%;max-width:560px;display:block;margin:0 auto;" aria-label="PUE gauge: Crane 1.15 vs industry average 1.58" role="img">
         <!-- Background track -->
         <path d="M 130,270 A 170,170 0 0,1 470,270" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="30" stroke-linecap="butt"/>
         <!-- Green zone 1.0–1.3 -->
@@ -116,32 +119,59 @@
         <path d="M 130,270 A 170,170 0 0,1 470,270" fill="none" stroke="#fbbf24" stroke-width="30" stroke-dasharray="106.81 427.26" stroke-dashoffset="-160.22" stroke-linecap="butt"/>
         <!-- Red zone 1.5–2.0 -->
         <path d="M 130,270 A 170,170 0 0,1 470,270" fill="none" stroke="#f87171" stroke-width="30" stroke-dasharray="267.04 267.03" stroke-dashoffset="-267.03" stroke-linecap="butt"/>
-        <!-- EU avg tick at PUE 1.58 → angle +14.4° from vertical -->
-        <line x1="339" y1="120" x2="348" y2="84" stroke="white" stroke-width="3" stroke-linecap="round" opacity="0.95"/>
-        <text x="354" y="80" fill="white" font-size="11" font-weight="700" font-family="Inter,sans-serif">EU Avg</text>
-        <text x="354" y="94" fill="#f87171" font-size="11" font-weight="700" font-family="Inter,sans-serif">1.58</text>
-        <!-- End labels -->
-        <text x="108" y="298" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="10" font-family="Inter,sans-serif">1.0</text>
-        <text x="492" y="298" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="10" font-family="Inter,sans-serif">2.0</text>
-        <text x="108" y="312" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="700" font-family="Inter,sans-serif">BEST</text>
-        <text x="492" y="312" text-anchor="middle" fill="#f87171" font-size="9" font-weight="700" font-family="Inter,sans-serif">WORST</text>
-        <!-- Needle (animated via JS) -->
-        <g id="pue-needle">
-          <line x1="300" y1="130" x2="300" y2="262" stroke="rgba(255,255,255,.9)" stroke-width="3" stroke-linecap="round"/>
-          <polygon points="300,118 294,135 306,135" fill="white" opacity="0.95"/>
-          <circle cx="300" cy="270" r="13" fill="rgba(255,255,255,.12)" stroke="white" stroke-width="2"/>
-          <circle cx="300" cy="270" r="5" fill="white"/>
+
+        <!-- Industry-avg marker: dashed red pointer at PUE 1.58 (θ = +14.4° from top of arc) -->
+        <!-- Line runs from just outside the arc (R≈190) to R≈218; dot at outer end -->
+        <g opacity="0.95">
+          <line x1="347.3" y1="85.9" x2="354.2" y2="58.1" stroke="#fca5a5" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 3"/>
+          <circle cx="354.2" cy="58.1" r="5" fill="#fca5a5"/>
         </g>
+
+        <!-- End tick labels for scale -->
+        <text x="120" y="298" text-anchor="middle" fill="rgba(255,255,255,.55)" font-size="14" font-weight="700" font-family="Inter,sans-serif">1.0</text>
+        <text x="480" y="298" text-anchor="middle" fill="rgba(255,255,255,.55)" font-size="14" font-weight="700" font-family="Inter,sans-serif">2.0</text>
+        <text x="300" y="315" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="11" letter-spacing="2" font-family="Inter,sans-serif">POWER USAGE EFFECTIVENESS</text>
+
+        <!-- Needle (animated via JS) — Crane 1.15 -->
+        <g id="pue-needle">
+          <line x1="300" y1="130" x2="300" y2="262" stroke="rgba(255,255,255,.95)" stroke-width="4" stroke-linecap="round"/>
+          <polygon points="300,116 292,136 308,136" fill="white" opacity="0.98"/>
+          <circle cx="300" cy="270" r="14" fill="rgba(255,255,255,.15)" stroke="white" stroke-width="2"/>
+          <circle cx="300" cy="270" r="5.5" fill="white"/>
+        </g>
+
         <!-- Centre readout -->
-        <text x="300" y="212" text-anchor="middle" fill="white" font-size="40" font-weight="900" font-family="Inter,sans-serif">1.15</text>
-        <text x="300" y="234" text-anchor="middle" fill="rgba(255,255,255,.55)" font-size="11" font-weight="700" letter-spacing="2" font-family="Inter,sans-serif">CRANE PUE</text>
-        <text x="300" y="253" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700" font-family="Inter,sans-serif">26% below EU average</text>
+        <text x="300" y="210" text-anchor="middle" fill="white" font-size="52" font-weight="900" font-family="Inter,sans-serif" letter-spacing="-1">1.15</text>
+        <text x="300" y="236" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="12" font-weight="700" letter-spacing="3" font-family="Inter,sans-serif">CRANE PUE</text>
       </svg>
+
+      <!-- Comparison strip: HTML (scales cleanly on mobile) -->
+      <div class="pue-compare">
+        <div class="pue-chip pue-chip-crane">
+          <div class="pue-chip-dot"></div>
+          <div class="pue-chip-body">
+            <div class="pue-chip-val">1.15</div>
+            <div class="pue-chip-lbl">Crane</div>
+          </div>
+        </div>
+        <div class="pue-delta">
+          <div class="pue-delta-num">26%</div>
+          <div class="pue-delta-lbl">less energy wasted</div>
+        </div>
+        <div class="pue-chip pue-chip-industry">
+          <div class="pue-chip-dot"></div>
+          <div class="pue-chip-body">
+            <div class="pue-chip-val">1.58</div>
+            <div class="pue-chip-lbl">Industry avg</div>
+          </div>
+        </div>
+      </div>
+
       <!-- Legend -->
-      <div style="display:flex;justify-content:center;gap:1.5rem;margin-top:.6rem;flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:.4rem;"><div style="width:12px;height:12px;border-radius:2px;background:#4ade80;flex-shrink:0"></div><span style="font-size:.75rem;color:rgba(255,255,255,.65);">Excellent (1.0–1.3)</span></div>
-        <div style="display:flex;align-items:center;gap:.4rem;"><div style="width:12px;height:12px;border-radius:2px;background:#fbbf24;flex-shrink:0"></div><span style="font-size:.75rem;color:rgba(255,255,255,.65);">Good (1.3–1.5)</span></div>
-        <div style="display:flex;align-items:center;gap:.4rem;"><div style="width:12px;height:12px;border-radius:2px;background:#f87171;flex-shrink:0"></div><span style="font-size:.75rem;color:rgba(255,255,255,.65);">Industry avg (1.5–2.0)</span></div>
+      <div class="pue-legend">
+        <div class="pue-legend-item"><span class="pue-legend-sw" style="background:#4ade80"></span>Excellent (1.0–1.3)</div>
+        <div class="pue-legend-item"><span class="pue-legend-sw" style="background:#fbbf24"></span>Good (1.3–1.5)</div>
+        <div class="pue-legend-item"><span class="pue-legend-sw" style="background:#f87171"></span>Poor (1.5–2.0)</div>
       </div>
     </div>
   </div>
@@ -154,7 +184,7 @@
   <div class="pill">Who We Are</div>
   <div class="two-col">
     <div>
-      <h2>Built on a <span class="hl">decade of green engineering</span></h2>
+      <h2>Built on <span class="hl">15 years of green engineering</span></h2>
       <ul class="bullet"><li>Founded 2011 in Berlin</li><li>30+ data centres across Europe</li><li>200+ MW total capacity delivered</li><li>100% renewable energy on every build</li></ul>
       <div class="cert-row"><span class="cert">ISO 50001</span><span class="cert">ISO 14001</span><span class="cert">RE100</span><span class="cert">EU Taxonomy</span><span class="cert">EN 50600</span></div>
     </div>
@@ -186,14 +216,14 @@
   <div class="two-col" style="margin-bottom:2rem">
     <div><h2>How we <span class="hl">engineer it</span></h2><p>Four technology pillars. Every build.</p></div>
     <div>
-      <div class="bar-row"><div class="bar-hdr"><span>PUE vs EU avg</span><span style="color:#16a34a;font-weight:700">26% better</span></div><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div></div>
+      <div class="bar-row"><div class="bar-hdr"><span>PUE vs industry avg</span><span style="color:#16a34a;font-weight:700">26% better</span></div><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div></div>
       <div class="bar-row"><div class="bar-hdr"><span>Renewable</span><span style="color:#16a34a;font-weight:700">100%</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
       <div class="bar-row"><div class="bar-hdr"><span>Utilisation</span><span style="color:#16a34a;font-weight:700">75%</span></div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div></div>
     </div>
   </div>
-  <div class="pillar"><span class="pillar-num">01 Energy</span><span class="pillar-icon">☀️</span><div><h3>Renewable Integration</h3><p style="font-size:.82rem;margin:.3rem 0 .5rem">On-site solar and a 20-year fixed-price wind PPA eliminate fuel cost and grid dependency from Day 1.</p><div class="chips"><span class="chip">Solar</span><span class="chip">Wind PPA</span><span class="chip">BESS</span></div></div></div>
+  <div class="pillar"><span class="pillar-num">01 Energy</span><span class="pillar-icon">☀️</span><div><h3>Renewable Integration</h3><p style="font-size:.82rem;margin:.3rem 0 .5rem">On-site solar and a 15-year fixed-price wind PPA eliminate fuel cost and grid dependency from Day 1.</p><div class="chips"><span class="chip">Solar</span><span class="chip">Wind PPA</span><span class="chip">BESS</span></div></div></div>
   <div class="pillar"><span class="pillar-num">02 Cooling</span><span class="pillar-icon">❄️</span><div><h3>Direct Liquid Cooling</h3><p style="font-size:.82rem;margin:.3rem 0 .5rem">Rear-door heat exchangers remove 90% of heat at source — before it ever enters room air — cutting cooling energy by half.</p><div class="chips"><span class="chip">Rear-door HX</span><span class="chip">Free-air</span></div></div></div>
-  <div class="pillar"><span class="pillar-num">03 Compute</span><span class="pillar-icon">🖥️</span><div><h3>AI-Optimised Fleet</h3><p style="font-size:.82rem;margin:.3rem 0 .5rem">Our AI scheduler (Orchid) achieves 75% server utilisation — five times the EU average of 15% — meaning fewer servers for the same workload.</p><div class="chips"><span class="chip">Orchid</span><span class="chip">75% util</span></div></div></div>
+  <div class="pillar"><span class="pillar-num">03 Compute</span><span class="pillar-icon">🖥️</span><div><h3>AI-Optimised Fleet</h3><p style="font-size:.82rem;margin:.3rem 0 .5rem">Our AI scheduler (Orchid) achieves 75% server utilisation — five times the enterprise average of ~15% — meaning fewer servers for the same workload.</p><div class="chips"><span class="chip">Orchid</span><span class="chip">75% util</span></div></div></div>
   <div class="pillar"><span class="pillar-num">04 Lifecycle</span><span class="pillar-icon">🔄</span><div><h3>Circular Hardware</h3><p style="font-size:.82rem;margin:.3rem 0 .5rem">Digital asset passports track every component from install to end-of-life. 95% of hardware reused or remanufactured. Zero landfill.</p><div class="chips"><span class="chip">5-yr refresh</span><span class="chip">95% reuse</span></div></div></div>
 </div>
 
